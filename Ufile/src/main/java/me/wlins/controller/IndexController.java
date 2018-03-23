@@ -21,6 +21,11 @@ public class IndexController {
         return "code/file";
     }
 
+    @RequestMapping(value="/login", method= RequestMethod.GET)
+    public String showLoginPage(){
+        return "login";
+    }
+
     @RequestMapping(value = "/doUpload", method = RequestMethod.POST)
     public String doUploadFile(HttpServletRequest request, @RequestParam("file") MultipartFile file, ModelMap map) {
         //Store the file
