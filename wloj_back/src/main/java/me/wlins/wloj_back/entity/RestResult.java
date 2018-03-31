@@ -29,15 +29,23 @@ public class RestResult {
         return data;
     }
 
-    public void setCode(int code) {
+    public RestResult setCode(ResultCode code) {
+        this.code = code.getCode();
+        return this;
+    }
+
+    public RestResult setCode(int code) {
         this.code = code;
+        return this;
     }
 
-    public void setMessage(String message) {
+    public RestResult setMessage(String message) {
         this.message = message;
+        return this;
     }
 
-    public void setData(Object data) {
+    public RestResult setData(Object data) {
         this.data = data;
+        return this;
     }
 }
