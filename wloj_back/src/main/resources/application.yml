@@ -1,0 +1,22 @@
+# set the server portserver:
+server:
+  port: 8888
+  servlet:
+    context-path: /wloj
+
+# set the spring database
+spring:
+  datasource: # satasource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/wloj
+    username: root
+    password: 123456
+  jpa: #jpa
+    database: MYSQL # specify the DBMS
+    show-sql: true # show the log of the sql query
+    hibernate: # Hibernate ddl auto
+      ddl-auto: update
+  aop: #aop
+    proxy-target-class: true #default open
+
+
