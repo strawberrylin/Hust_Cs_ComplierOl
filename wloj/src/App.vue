@@ -46,9 +46,9 @@ export default {
     border: 1px solid #eee;
     margin: 10px 50px 0 50px;
   }
-  /* 加上红色边框看出布局 */
+  /* green border */
   .el-container, .el-aside {
-    border: 1px solid red;
+    border: 1px solid green;
   }
 
 </style>

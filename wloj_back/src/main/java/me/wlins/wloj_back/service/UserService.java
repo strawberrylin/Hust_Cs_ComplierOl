@@ -20,5 +20,5 @@ public interface UserService {
      * @Description: if vertify cuddessfully, return user information, or null
      * @Date: 下午8:15 18-3-31
      */
-    User checkLogin(String username);
+    User checkLogin(String username, String password);
 }

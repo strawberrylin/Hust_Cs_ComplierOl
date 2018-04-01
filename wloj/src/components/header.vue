@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="success" class="userIcon">{{$store.state.user.name}}</el-button>
+    <el-button type="success" class="userIcon">{{$store.state.user.username}}</el-button>
     <el-button type="primary" @click="onLogout" round class="signout">注销</el-button>
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   methods: {
     ...mapActions(['logOut', 'loginFail']),
     onLogout: function () {
-      this.onLogout()
+      this.logOut()
       this.loginFail()
     }
   }

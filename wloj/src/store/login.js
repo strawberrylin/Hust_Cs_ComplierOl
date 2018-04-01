@@ -16,6 +16,7 @@ export default {
   // change the state
   actions: {
     loginSuccess ({commit}) {
+      console.log('loginsuccess')
       commit('loginSuccess')
     },
     loginFail ({commit}) {

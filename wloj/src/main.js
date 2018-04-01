@@ -10,6 +10,8 @@ import locale from 'element-ui/lib/locale/lang/en'
 import store from './store'
 import axios from './axios'
 
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+
 Vue.use(ElementUI, { size: 'small' }, { locale })
 
 Vue.config.productionTip = false

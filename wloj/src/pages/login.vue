@@ -49,12 +49,16 @@ export default {
         this.onLogging = false
         return
       }
-      this.$ajxj.get('/test/persons', {
-        name: this.form.name,
-        password: this.form.password
+      this.$ajxj({
+        method: 'post',
+        url: '/user/login',
+        params: {
+          password: this.form.password,
+          username: this.form.name
+        }
       })
         .then((response) => {
-          let data = response.data
+          let data = response
           if (data.code === 200) {
             this.loginSuccess()
             this.logIn(data.data)

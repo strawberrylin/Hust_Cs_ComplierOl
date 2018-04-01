@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User checkLogin(String username){
-        return userRepository.findByUsername(username);
+    public User checkLogin(String username, String password){
+        return userRepository.findFirstByUsernameAndAndPassword(username, password);
     }
 }

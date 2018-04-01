@@ -15,5 +15,5 @@ public interface UserRepository extends JpaRepository<User, Integer>{
      * @Description: find user by username
      * @Date: 下午8:20 18-3-31
      */
-    User findByUsername(String username);
+    User findFirstByUsernameAndAndPassword(String username, String password);
 }

@@ -10,7 +10,7 @@ axios.defaults.timeout = 3000
 axios.defaults.withCredentials = true
 // if developement environment, baseUrl
 if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'http://localhost:8080'
+  axios.defaults.baseURL = 'http://localhost:8888/wloj'
 }
 
 // content-type settings
