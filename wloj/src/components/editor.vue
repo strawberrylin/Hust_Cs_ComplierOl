@@ -2,7 +2,7 @@
   <div>
     <el-input
       type="textarea"
-      :rows="12"
+      :rows="15"
       placeholder="请输入内容"
       v-model="textarea">
     </el-input>

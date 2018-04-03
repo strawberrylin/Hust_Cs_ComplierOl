@@ -2,7 +2,7 @@ export default {
   // common information
   state: {
     // the state of the login
-    isLogin: true
+    isLogin: false
   },
   // chanege the state by $store.commit('methodName)
   mutations: {

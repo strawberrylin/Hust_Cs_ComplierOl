@@ -36,9 +36,5 @@ export default {
 
 <style>
   .userIcon{
-
-  }
-  .userIcon{
-
   }
 </style>
