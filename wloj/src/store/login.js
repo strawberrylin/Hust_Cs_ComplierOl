@@ -2,7 +2,7 @@ export default {
   // common information
   state: {
     // the state of the login
-    isLogin: false
+    isLogin: true
   },
   // chanege the state by $store.commit('methodName)
   mutations: {
@@ -16,7 +16,6 @@ export default {
   // change the state
   actions: {
     loginSuccess ({commit}) {
-      console.log('loginsuccess')
       commit('loginSuccess')
     },
     loginFail ({commit}) {

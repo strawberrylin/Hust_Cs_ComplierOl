@@ -1,25 +1,16 @@
 <template>
   <div id="app" >
-    <el-container v-if="isLogin" class="main-container">
-      <el-header>
-        <Header></Header>
-      </el-header>
-      <el-container>
-        <el-main>
-        </el-main>
-      </el-container>
-    </el-container>
-    <Login v-if="!isLogin"></Login>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Header from './components/header.vue'
+import Student from './pages/student.vue'
 import Login from './pages/login.vue'
 
 export default {
   components: {
-    Header,
+    Student,
     Login
   },
   name: 'App',
@@ -39,16 +30,15 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
   }
   .main-container {
     height: 100%;
     border: 1px solid #eee;
-    margin: 10px 50px 0 50px;
+    margin: 0 50px 0 50px;
   }
   /* green border */
   .el-container, .el-aside {
-    border: 1px solid green;
+    border: 1px solid rgb(79, 200, 236);
   }
 
 </style>

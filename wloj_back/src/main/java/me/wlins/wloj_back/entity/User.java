@@ -22,7 +22,7 @@ public class User {
 
     @NotNull(message = "password is required")
     @Column(nullable = false)
-    @Size(min = 6, max = 18, message = "6~18　is required")
+    @Size(min = 6, max = 128, message = "6~18　is required")
     private String password;
 
     @NotNull(message = "type is required")

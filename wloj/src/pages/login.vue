@@ -11,7 +11,7 @@
         <el-input v-model="form.password" type="password" placeholder="初始密码为123456"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">登录</el-button>
+        <el-button type="primary" class="submitbtn"  @click="onSubmit">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -22,6 +22,8 @@
 import {
   mapActions
 } from 'vuex'
+
+import md5 from 'js-md5'
 
 let data = {
   form: {
@@ -53,7 +55,7 @@ export default {
         method: 'post',
         url: '/user/login',
         params: {
-          password: this.form.password,
+          password: md5(this.form.password),
           username: this.form.name
         }
       })
@@ -62,6 +64,7 @@ export default {
           if (data.code === 200) {
             this.loginSuccess()
             this.logIn(data.data)
+            this.$router.push({path: '/student'})
           } else {
             this.msg = data.message
           }
@@ -81,5 +84,7 @@ export default {
     width: 300px;
     margin: 0 auto;
   }
-
+  .submitbtn{
+    width: 220px;
+  }
 </style>
