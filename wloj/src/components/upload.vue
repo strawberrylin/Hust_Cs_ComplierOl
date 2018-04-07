@@ -9,7 +9,7 @@
   :auto-upload="false">
   <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
   <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">提交</el-button>
-  </el-upload>  
+  </el-upload>
 </template>
 <script>
 export default {

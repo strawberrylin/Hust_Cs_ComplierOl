@@ -98,9 +98,6 @@ export default {
   computed: {
     isLogin: function () {
       console.log('login state:' + this.$store.state.login.isLogin)
-      if (!this.$store.state.login.isLogin) {
-        this.$router.push({path: '/login'})
-      }
       return this.$store.state.login.isLogin
     }
   }
