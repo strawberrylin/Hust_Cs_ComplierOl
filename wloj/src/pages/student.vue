@@ -19,7 +19,7 @@
         <Header></Header>
       </el-header>
       <el-container>
-        <el-containner>
+        <el-container>
           <el-header class="el-header-s">
             <el-select v-model="value" placeholder="请选择">
             <el-option
@@ -33,7 +33,7 @@
           <el-main class="el-main-editor">
             <Editor></Editor>
           </el-main>
-        </el-containner>
+        </el-container>
         <el-main class="el-main-upload">
           <el-container class="el-container-i">
             <el-input class="el-input-m"
@@ -47,12 +47,15 @@
               clearable>
             </el-input>
           </el-container>
-          <Upload></Upload>
+          <form enctype="multipart/form-data">
+            <input type="file" @change="getFile($event)">
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload($event)">提交</el-button>
+          </form>
         </el-main>
       </el-container>
       <el-container>
-        <el-main>
-          <Editor></Editor>
+        <el-main class="el-main-message">
+          {{message}}
         </el-main>
         <el-main>
           <Editor></Editor>
@@ -87,7 +90,9 @@ export default {
       }],
       value: '',
       inputC: '',
-      inputR: ''
+      inputR: '',
+      file: '',
+      message: ''
     }
   },
   components: {
@@ -97,8 +102,35 @@ export default {
   },
   computed: {
     isLogin: function () {
-      console.log('login state:' + this.$store.state.login.isLogin)
       return this.$store.state.login.isLogin
+    }
+  },
+  methods: {
+    getFile: function (event) {
+      this.file = event.target.files[0]
+      console.log(this.file)
+    },
+    submitUpload: function (event) {
+      event.preventDefault()
+      let formData = new FormData()
+      formData.append('file', this.file)
+      formData.append('curouse', '1')
+      formData.append('username', this.$store.state.user.username)
+      this.$ajxj({
+        method: 'post',
+        url: 'file/upload',
+        data: formData
+      })
+        .then(response => {
+          let data = response
+          if (data.code === 200) {
+            this.message = data.data
+          }
+        }).catch(err => {
+          console.log(err)
+        }).finally(() => {
+
+        })
     }
   }
 }
@@ -136,7 +168,11 @@ export default {
   }
   .el-main-editor {
     height: 340px;
-    width: 600px;
+    width: 610px;
+  }
+  .el-main-message {
+    height: 300px;
+    width: 580px;
   }
   .el-main-upload {
     height: 400px;

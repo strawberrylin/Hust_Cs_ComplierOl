@@ -17,16 +17,13 @@ if (process.env.NODE_ENV === 'development') {
 // deal with the problem exist in SpringMVC Controller, can not get the correct param in request
 axios.interceptors.request.use(
   config => {
-    config.headers = {
-      'content-type': 'application/x-www-form-urlencode;charset=utf-8'
-    }
     const data = config.data
     if (!data) {
       return config
     }
-    const key = Object.keys(data)
+    // const key = Object.keys(data)
     // rewrite the data {"name":"name","password":"password"} => name=name&password=password
-    config.data = encodeURI(key.map(name => `${name}=${data[name]}`).join('&'))
+    // config.data = encodeURI(key.map(name => `${name}=${data[name]}`).join('&'))
     console.log(config.data)
     return config
   },
