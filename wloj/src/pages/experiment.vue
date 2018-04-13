@@ -19,7 +19,7 @@
       </el-row>
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside style="width: 200px;background-color: #FFFFFF">
         <el-menu :default-openeds="['1']">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-menu"></i>导航</template>
@@ -114,6 +114,11 @@ export default {
   },
   components: {
     Editor
+  },
+  computed: {
+    isLogin: function () {
+      return this.$store.state.login.isLogin
+    }
   }
 }
 </script>

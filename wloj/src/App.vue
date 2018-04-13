@@ -8,12 +8,14 @@
 import Student from './pages/student.vue'
 import Login from './pages/login.vue'
 import Experiment from './pages/experiment.vue'
+import Person from './pages/person.vue'
 
 export default {
   components: {
     Student,
     Login,
-    Experiment
+    Experiment,
+    Person
   },
   name: 'App',
   computed: {

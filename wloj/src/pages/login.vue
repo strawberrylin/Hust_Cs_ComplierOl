@@ -1,9 +1,13 @@
 <template>
+<el-container style="height: 100vh;">
+  <el-main>
+  </el-main>
+  <el-main style="margin-top:180px;text-align:center;">
   <div id="login">
-    <img src="../assets/logo.png">
-    <p>Enjoy Geek</p>
-    <p>{{msg}}</p>
     <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item>
+        <el-button type="success" class="submitbtn"  @click="onSubmit">Sign In</el-button>
+      </el-form-item>
       <el-form-item label="帐号">
         <el-input v-model="form.name" placeholder="请输入学号"></el-input>
       </el-form-item>
@@ -15,6 +19,8 @@
       </el-form-item>
     </el-form>
   </div>
+  </el-main>
+</el-container>
 </template>
 
 <script>
@@ -86,5 +92,11 @@ export default {
   }
   .submitbtn{
     width: 220px;
+  }
+  body{
+    background-image: url(../assets/back.jpg);
+    background-size: cover;
+    width: 100%;
+    height: 100%;
   }
 </style>
