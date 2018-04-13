@@ -54,6 +54,7 @@ public class FileController {
                 List<String> processListCE = new ArrayList<String>();
                 List<String> processListCI = new ArrayList<String>();
                 List<String> output = new ArrayList<String>();
+                StringBuffer s = new StringBuffer();
                 processListCE.add("COMPLIE OUTPUT ERROR :");
                 processListCI.add("COMPLIE OUTPUT :");
                 file.transferTo(new File(path + File.separator +fileName));
@@ -77,10 +78,12 @@ public class FileController {
                 for(String l : processListCE){
                     System.out.println(l);
                     output.add(l);
+                    s.append(l);
                 }
                 for(String l : processListCI){
                     System.out.println(l);
                     output.add(l);
+                    s.append(l);
                 }
                 map.put("errorC", processListCE);
                 map.put("inputC", processListCI);
@@ -108,20 +111,22 @@ public class FileController {
                     for(String l : processListXE){
                         System.out.println(l);
                         output.add(l);
+                        s.append(l);
                     }
                     for(String l : processListXI){
                         System.out.println(l);
                         output.add(l);
+                        s.append(l);
                     }
                     map.put("errorX", processListXE);
                     map.put("inputX", processListXI);
                     if(0 == exitValueX){
-                        return resultGenerator.getSuccessResult("Sucessfully",output);
+                        return resultGenerator.getSuccessResult("Sucessfully",s);
                     }else{
-                        return resultGenerator.getFailResult("Sorry there is some problem with run",output);
+                        return resultGenerator.getFailResult("Sorry there is some problem with run",s);
                     }
                 }else{
-                    return resultGenerator.getFailResult("Sorry there is some problem with compiler",output);
+                    return resultGenerator.getFailResult("Sorry there is some problem with compiler",s);
                 }
             }catch (IOException e){
                 e.printStackTrace();

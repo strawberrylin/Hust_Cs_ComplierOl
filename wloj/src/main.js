@@ -10,12 +10,15 @@ import router from './router'
 import store from './store'
 import axios from './axios'
 
+var VueCodeMirror = require('vue-codemirror-lite')
+
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
-Vue.use(ElementUI, { size: 'small' }, { locale })
+Vue.use(ElementUI, { size: 'small' })
+Vue.use(locale)
+Vue.use(VueCodeMirror)
 
 Vue.config.productionTip = false
-
 Vue.prototype.$ajxj = axios
 
 /* eslint-disable no-new */

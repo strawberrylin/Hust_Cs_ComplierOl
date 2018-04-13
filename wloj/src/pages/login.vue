@@ -64,7 +64,7 @@ export default {
           if (data.code === 200) {
             this.loginSuccess()
             this.logIn(data.data)
-            this.$router.push({path: '/student'})
+            this.$router.push({path: '/experiment'})
           } else {
             this.msg = data.message
           }
