@@ -1,10 +1,10 @@
 <template>
-  <el-container style="height:100vh;width:100%;background-color: #E9EEF3;">
+  <el-container style="height:100vh;width:100hh;background-color: #E9EEF3;">
     <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-left:150px;margin-right:150px;">
       <el-tab-pane label="实验记录" name="first">
-        <el-container style="margin-left:80px;margin-left:80px;">
+        <el-container style="margin-right:80px;margin-left:80px;">
           <el-main>
-            <el-table :data="tableData" style="width: 100%;" max-height="250">
+            <el-table :data="tableData" max-height="250">
               <el-table-column fixed prop="date" label="日期" width="150">
               </el-table-column>
               <el-table-column prop="experiment" label="实验" width="300px">
@@ -22,14 +22,13 @@
               </el-table-column>
             </el-table>
           </el-main>
-          <el-main>
-          </el-main>
         </el-container>
       </el-tab-pane>
       <el-tab-pane label="修改密码" name="second">
-        <el-container style="margin-left:80px;margin-left:80px;">
-        <div id="reset">
-          <el-form ref="form" label-width="80px">
+        <el-container style="margin-right:80px;margin-left:80px;">
+          <el-main style="margin-left:80px;margin-right:80px;">
+          <div id="reset">
+          <el-form ref="form" label-width="80px" >
             <el-form-item label="帐号">
               <el-input v-model="form.name" placeholder="请输入学号"></el-input>
             </el-form-item>
@@ -37,13 +36,14 @@
               <el-input v-model="form.oldpassword" type="password" placeholder="初始密码为123456"></el-input>
             </el-form-item>
             <el-form-item label="新密码">
-              <el-input v-model="form.newpassword" type="password" placeholder="初始密码为123456"></el-input>
+              <el-input v-model="form.newpassword" type="password" placeholder="請輸入新密碼"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" class="submitbtn"  @click="onSubmit">提交</el-button>
+              <el-button type="primary" class="submitbtn"  @click="onSubmit">修改</el-button>
             </el-form-item>
           </el-form>
-        </div>
+          </div>
+          </el-main>
         </el-container>
       </el-tab-pane>
     </el-tabs>
@@ -83,6 +83,7 @@ export default {
 <style>
 #reset {
     width: 300px;
-    margin: 0 auto;
+    margin-left: 200px;
+    margin-right: 200px;
   }
 </style>

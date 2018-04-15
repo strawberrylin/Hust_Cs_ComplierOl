@@ -5,17 +5,17 @@
 </template>
 
 <script>
-import Student from './pages/student.vue'
 import Login from './pages/login.vue'
-import Experiment from './pages/experiment.vue'
 import Person from './pages/person.vue'
+import Student from './pages/student.vue'
+import Teacher from './pages/teacher.vue'
 
 export default {
   components: {
     Student,
     Login,
-    Experiment,
-    Person
+    Person,
+    Teacher
   },
   name: 'App',
   computed: {

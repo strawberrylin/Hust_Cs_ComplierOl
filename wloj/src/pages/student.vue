@@ -1,74 +1,93 @@
 <template>
-  <el-container v-if="isLogin">
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-menu :default-openeds="['1']">
+  <el-container style="height: 100vh;background-color:#E9EEF3">
+    <el-header height="40px">
+      <el-row type="flex" class="row-bg" justify="end">
+        <el-col :span="5"><div class="grid-content bg-purple"></div>实验代码提交与检测系统</el-col>
+        <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="4"><div class="grid-content bg-purple">
+          <el-dropdown @command="handleCommand">
+            <i class="el-icon-setting" style="margin-right: 15px"></i>
+            <el-dropdown-menu slot="dropdown" >
+              <el-dropdown-item>个人中心</el-dropdown-item>
+              <el-dropdown-item>实验记录</el-dropdown-item>
+              <el-dropdown-item>注销</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <el-button type="success" class="userIcon">{{$store.state.user.username}}</el-button>
+          </div>
+        </el-col>
+      </el-row>
+    </el-header>
+    <el-container>
+      <el-aside style="width: 200px;background-color: #FFFFFF">
+        <el-menu :default-openeds="['1']">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-menu"></i>导航</template>
+          <template slot="title"><i class="el-icon-menu"></i>实验</template>
           <el-menu-item-group>
-            <el-menu-item index="1-1">实验1</el-menu-item>
-            <el-menu-item index="1-2">实验2</el-menu-item>
-            <el-menu-item index="1-3">实验3</el-menu-item>
-            <el-menu-item index="1-4">实验4</el-menu-item>
-            <el-menu-item index="1-5">实验5</el-menu-item>
+            <el-menu-item index="1-1">字符串操作实验</el-menu-item>
+            <el-menu-item index="1-2">多线程实验</el-menu-item>
+            <el-menu-item index="1-3">多进程实验</el-menu-item>
+            <el-menu-item index="1-4">共享内存实验</el-menu-item>
+            <el-menu-item index="1-5">文件系统实验</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-      </el-menu>
-    </el-aside>
-    <el-container>
-      <el-header>
-        <Header></Header>
-      </el-header>
+        </el-menu>
+      </el-Aside>
       <el-container>
+        <el-aside style="background-color: #FFFFFF;border: 2px solid #9E9E9E;">题目</el-aside>
         <el-container>
-          <el-header class="el-header-s">
-            <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
+          <el-header style="background-color: #696969;height:40px;line-height:36px">
+            <el-row :gutter="20">
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <el-select v-model="value" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                  </el-select>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <el-input
+                    placeholder="请输入编译参数"
+                    v-model="inputC"
+                  clearable>
+                  </el-input>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <el-input
+                  placeholder="请输入运行参数"
+                  v-model="inputR"
+                  clearable>
+                </el-input>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <el-button type="primary">提交<i class="el-icon-upload el-icon--right"></i></el-button>
+                </div>
+              </el-col>
+            </el-row>
           </el-header>
-          <el-main class="el-main-editor">
-            <Editor></Editor>
+          <Editor></Editor>
+          <el-main style="background-color:#FFFFFF;border-top: 30px solid #FDF5E6;border-left: 30px solid #FDF5E6;color:green;">
+            Hello, this is the output.
           </el-main>
         </el-container>
-        <el-main class="el-main-upload">
-          <el-container class="el-container-i">
-            <el-input class="el-input-m"
-              placeholder="请输入编译参数"
-              v-model="inputC"
-              clearable>
-            </el-input>
-            <el-input class="el-input-m"
-              placeholder="请输入运行参数"
-              v-model="inputR"
-              clearable>
-            </el-input>
-          </el-container>
-          <form enctype="multipart/form-data">
-            <input type="file" @change="getFile($event)">
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload($event)">提交</el-button>
-          </form>
-        </el-main>
-      </el-container>
-      <el-container>
-        <el-main class="el-main-message">
-          {{message}}
-        </el-main>
-        <el-main>
-          <Editor></Editor>
-        </el-main>
       </el-container>
     </el-container>
+    <el-footer height="36px">Copyright @2018 Strawberrylin</el-footer>
   </el-container>
 </template>
 
 <script>
-import Header from '../components/header.vue'
 import Editor from '../components/editor.vue'
-import Upload from '../components/upload.vue'
 export default {
   data () {
     return {
@@ -90,103 +109,33 @@ export default {
       }],
       value: '',
       inputC: '',
-      inputR: '',
-      file: '',
-      message: ''
+      inputR: ''
     }
   },
   components: {
-    Header,
-    Editor,
-    Upload
+    Editor
   },
   computed: {
     isLogin: function () {
       return this.$store.state.login.isLogin
-    }
-  },
-  methods: {
-    getFile: function (event) {
-      this.file = event.target.files[0]
-      console.log(this.file)
-    },
-    submitUpload: function (event) {
-      event.preventDefault()
-      let formData = new FormData()
-      formData.append('file', this.file)
-      formData.append('curouse', '1')
-      formData.append('username', this.$store.state.user.username)
-      this.$ajxj({
-        method: 'post',
-        url: 'file/upload',
-        data: formData
-      })
-        .then(response => {
-          let data = response
-          if (data.code === 200) {
-            this.message = data.data
-          }
-        }).catch(err => {
-          console.log(err)
-        }).finally(() => {
-
-        })
     }
   }
 }
 </script>
 
 <style>
-  .el-header, .el-footer {
-    background-color: #eee;
-    color: #333;
+.el-header, .el-footer {
+    background-color: #363636;
+    color: #EAEAEA;
     text-align: center;
-    line-height: 60px;
+    line-height: 36px;
   }
   .el-aside {
     background-color: #D3DCE6;
     color: #333;
-    text-align: center;
-    line-height: 200px;
   }
   .el-main {
     background-color: #E9EEF3;
-    color: #333;
-    text-align: left;
-    margin-top: 0;
-    line-height: 160px;
-  }
-  body > .el-container {
-    margin: 0 50px 0 50px;
-  }
-  .el-container:nth-child(5) .el-aside,
-  .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
-  }
-  .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
-  }
-  .el-main-editor {
-    height: 340px;
-    width: 610px;
-  }
-  .el-main-message {
-    height: 300px;
-    width: 580px;
-  }
-  .el-main-upload {
-    height: 400px;
-  }
-  .el-header-s {
-    text-align: left;
-    margin-bottom: 0;
-  }
-  .el-input-m {
-    margin: 0 20 0 20;
-    width: 245px;
-  }
-  .el-container-i {
-    height: 100px;
-    border: #D3DCE6
+    border-top: 1px solid #363636;
   }
 </style>
