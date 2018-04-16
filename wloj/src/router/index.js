@@ -4,6 +4,9 @@ import Login from '../pages/login.vue'
 import Student from '../pages/student.vue'
 import Person from '../pages/person.vue'
 import Teacher from '../pages/teacher.vue'
+import Experiment from '../pages/experiment.vue'
+import Admin from '../pages/admin.vue'
+import Test from '../components/test.vue'
 
 Vue.use(Router)
 
@@ -32,6 +35,23 @@ export default new Router({
       path: '/teacher',
       name: 'teacher',
       component: Teacher
+    },
+    {
+      path: '/experiment',
+      name: 'experiment',
+      component: Experiment
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: Admin,
+      children: [
+        {
+          path: '/admin/1-1',
+          name: 'test',
+          component: Test
+        }
+      ]
     }
   ]
 })

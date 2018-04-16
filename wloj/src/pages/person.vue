@@ -1,8 +1,8 @@
 <template>
-  <el-container style="height:100vh;width:100hh;background-color: #E9EEF3;">
-    <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-left:150px;margin-right:150px;">
+  <el-container style="height:100vh;background-color: #E9EEF3;justify-content:center;align-items;center;">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="实验记录" name="first">
-        <el-container style="margin-right:80px;margin-left:80px;">
+        <el-container>
           <el-main>
             <el-table :data="tableData" max-height="250">
               <el-table-column fixed prop="date" label="日期" width="150">
@@ -15,7 +15,7 @@
               </el-table-column>
               <el-table-column fixed="right" label="操作" width="150">
                 <template slot-scope="scope">
-                  <el-button @click.native.prevent="deleteRow(scope.$index, tableData4)" type="text" size="small">
+                  <el-button @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small">
                     查看
                   </el-button>
                 </template>
@@ -25,9 +25,8 @@
         </el-container>
       </el-tab-pane>
       <el-tab-pane label="修改密码" name="second">
-        <el-container style="margin-right:80px;margin-left:80px;">
-          <el-main style="margin-left:80px;margin-right:80px;">
-          <div id="reset">
+        <el-container>
+          <el-main id="reset">
           <el-form ref="form" label-width="80px" >
             <el-form-item label="帐号">
               <el-input v-model="form.name" placeholder="请输入学号"></el-input>
@@ -39,10 +38,9 @@
               <el-input v-model="form.newpassword" type="password" placeholder="請輸入新密碼"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" class="submitbtn"  @click="onSubmit">修改</el-button>
+              <el-button type="primary" class="submitbtn"  @click="onSubmit" style="width:180px;">修改</el-button>
             </el-form-item>
           </el-form>
-          </div>
           </el-main>
         </el-container>
       </el-tab-pane>

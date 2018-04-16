@@ -9,13 +9,17 @@ import Login from './pages/login.vue'
 import Person from './pages/person.vue'
 import Student from './pages/student.vue'
 import Teacher from './pages/teacher.vue'
+import Experiment from './pages/experiment.vue'
+import Admin from './pages/admin.vue'
 
 export default {
   components: {
     Student,
     Login,
     Person,
-    Teacher
+    Teacher,
+    Experiment,
+    Admin
   },
   name: 'App',
   computed: {

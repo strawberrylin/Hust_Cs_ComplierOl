@@ -16,10 +16,10 @@
         </el-col>
       </el-row>
     </el-header>
-    <el-container>
-    <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-left:150px;margin-right:150px;">
+    <el-container style="justify-content:center;align-items;center;">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="实验记录" name="first">
-        <el-container style="margin-right:80px;">
+        <el-container>
           <el-aside style="width: 200px;background-color: #FFFFFF">
             <el-menu :default-openeds="['1']">
             <el-submenu index="1">
@@ -59,9 +59,8 @@
         </el-container>
       </el-tab-pane>
       <el-tab-pane label="修改密码" name="second">
-        <el-container style="margin-right:80px;margin-left:80px;">
-          <el-main style="margin-left:80px;margin-right:80px;">
-          <div id="reset">
+        <el-container>
+          <el-main id="reset">
           <el-form ref="form" label-width="80px" >
             <el-form-item label="帐号">
               <el-input v-model="form.name" placeholder="请输入学号"></el-input>
@@ -73,10 +72,9 @@
               <el-input v-model="form.newpassword" type="password" placeholder="請輸入新密碼"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" class="submitbtn"  @click="onSubmit" style="width:220px;">修改</el-button>
+              <el-button type="primary" class="submitbtn"  @click="onSubmit" style="width:180px;">修改</el-button>
             </el-form-item>
           </el-form>
-          </div>
           </el-main>
         </el-container>
       </el-tab-pane>
