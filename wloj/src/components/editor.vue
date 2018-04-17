@@ -4,6 +4,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror-lite'
+
 require('codemirror/mode/javascript/javascript')
 require('codemirror/mode/vue/vue')
 require('codemirror/mode/python/python')

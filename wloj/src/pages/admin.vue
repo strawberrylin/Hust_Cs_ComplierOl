@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height:100vh;">
+  <el-container style="height:100vh;background-color: #FFFFFF;">
     <el-header height=40px>
       <el-row type="flex" class="row-bg" justify="end">
         <el-col :span="5"><div class="grid-content bg-purple"></div>实验代码提交与检测系统</el-col>
@@ -13,7 +13,7 @@
     <el-container style="justify-content:center;align-items;center;">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="实验题目管理" name="first">
-          <el-container style="justify-content:center;align-items:center;">
+          <el-container>
             <el-aside style="width: 200px;background-color: #FFFFFF">
               <el-menu
               :default-openeds="['1']"

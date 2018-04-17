@@ -21,12 +21,7 @@ export default {
     Experiment,
     Admin
   },
-  name: 'App',
-  computed: {
-    isLogin () {
-      return this.$store.state.login.isLogin
-    }
-  }
+  name: 'App'
 }
 
 </script>

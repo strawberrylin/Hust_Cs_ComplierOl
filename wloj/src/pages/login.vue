@@ -6,7 +6,7 @@
   <div id="login">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item>
-        <el-button type="success" class="submitbtn"  @click="onSubmit">Sign In</el-button>
+        <el-button type="success" class="submitbtn" >Sign In</el-button>
       </el-form-item>
       <el-form-item label="帐号">
         <el-input v-model="form.name" placeholder="请输入学号"></el-input>
@@ -70,8 +70,13 @@ export default {
           if (data.code === 200) {
             this.loginSuccess()
             this.logIn(data.data)
-            this.$router.push({path: '/experiment'})
-          } else {
+            if (data.data.type === 0) {
+              this.$router.push({path: '/admin/'})
+            } else if (data.data.type === 1) {
+              this.$router.push({path: '/teacher/'})
+            } else if (data.data.type === 2) {
+              this.$router.push({path: '/student'})
+            }
             this.msg = data.message
           }
         }).catch((err) => {
