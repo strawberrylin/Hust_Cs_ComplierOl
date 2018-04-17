@@ -2,10 +2,17 @@
   <el-container>
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="实验次数">
-        <el-input v-model="form.num" placeholder="请输入实验次数"></el-input>
+        <el-select v-model="value" placeholder="请选择" style="width:230px;">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="实验名称">
-        <el-input v-model="form.name" placeholder="请输入实验名称"></el-input>
+        <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="实验要求">
         <el-input type="textarea" v-model="form.desc"></el-input>
@@ -17,7 +24,7 @@
         <el-input type="textarea" v-model="form.output"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">添加</el-button>
+        <el-button type="primary" @click="onSubmit">更新</el-button>
         <el-button type="success">退出</el-button>
       </el-form-item>
     </el-form>
@@ -34,7 +41,24 @@ export default {
         desc: '',
         input: '',
         output: ''
-      }
+      },
+      options: [{
+        value: '实验1',
+        label: ''
+      }, {
+        value: '实验2',
+        label: ''
+      }, {
+        value: '实验3',
+        label: ''
+      }, {
+        value: '实验4',
+        label: ''
+      }, {
+        value: '实验5',
+        label: ''
+      }],
+      value: ''
     }
   },
   methods: {

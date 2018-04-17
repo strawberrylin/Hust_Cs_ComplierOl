@@ -8,6 +8,8 @@ import Teacher from '../pages/teacher.vue'
 import Experiment from '../pages/experiment.vue'
 import Admin from '../pages/admin.vue'
 import AddLab from '../components/addlab.vue'
+import UpdateLab from '../components/updatelab.vue'
+import DeleteLab from '../components/deletelab.vue'
 
 Vue.use(Router)
 
@@ -51,6 +53,16 @@ export default new Router({
           path: '1-1',
           name: 'addlab',
           component: AddLab
+        },
+        {
+          path: '1-2',
+          name: 'updatelab',
+          component: UpdateLab
+        },
+        {
+          path: '1-3',
+          name: 'deletelab',
+          component: DeleteLab
         }
       ]
     }

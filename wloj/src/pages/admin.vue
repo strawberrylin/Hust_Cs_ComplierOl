@@ -5,7 +5,6 @@
         <el-col :span="5"><div class="grid-content bg-purple"></div>实验代码提交与检测系统</el-col>
         <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple">
-          <el-button type="success" class="userIcon">退出</el-button>
           </div>
         </el-col>
       </el-row>
@@ -25,8 +24,8 @@
               <template slot="title"><i class="el-icon-menu"></i>实验</template>
                 <el-menu-item-group>
                   <el-menu-item index="1-1">添加</el-menu-item>
-                  <el-menu-item index="1-2">删除</el-menu-item>
-                  <el-menu-item index="1-3">修改</el-menu-item>
+                  <el-menu-item index="1-2">更新</el-menu-item>
+                  <el-menu-item index="1-3">删除</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               </el-menu>
@@ -39,21 +38,26 @@
           </el-container>
         </el-tab-pane>
         <el-tab-pane label="用户管理" name="second">
-          <el-container style="justify-content:center;align-items:center;">
+          <el-container>
             <el-aside style="width: 200px;background-color: #FFFFFF">
-              <el-menu :default-openeds="['1']">
-              <el-submenu index="1">
+              <el-menu
+              :default-openeds="['2']"
+              router
+              unique-opened
+              >
+              <el-submenu index="2">
               <template slot="title"><i class="el-icon-menu"></i>用户</template>
                 <el-menu-item-group>
-                  <el-menu-item index="1-1">添加</el-menu-item>
-                  <el-menu-item index="1-2">删除</el-menu-item>
-                  <el-menu-item index="1-3">修改</el-menu-item>
+                  <el-menu-item index="2-1">添加</el-menu-item>
+                  <el-menu-item index="2-2">删除</el-menu-item>
+                  <el-menu-item index="2-3">修改</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               </el-menu>
             </el-aside>
             <el-container>
               <el-main>
+                <router-view></router-view>
               </el-main>
             </el-container>
           </el-container>
