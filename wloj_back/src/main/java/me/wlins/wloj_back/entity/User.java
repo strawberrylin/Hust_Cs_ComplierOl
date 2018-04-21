@@ -9,15 +9,18 @@ package me.wlins.wloj_back.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; //primary key, auto-increament
+    @NotNull(message = "num is required")
+    @Column(unique = true, nullable = false)
+    private String usernum; //primary key, auto-increament
 
     @NotNull(message = "username is required")
-    @Column(unique = true,nullable = false)
+    @Column(nullable = false)
     private String username;
 
     @NotNull(message = "password is required")
@@ -29,11 +32,14 @@ public class User {
     @Column(nullable = false)
     private Integer type;
 
-    // seter an geter
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "id.user")
+    private Set<Record> records = new HashSet<Record>();
+
+    // seter and geter
 
 
-    public Integer getId() {
-        return id;
+    public String getUsernum() {
+        return usernum;
     }
 
     public String getUsername() {
@@ -48,8 +54,8 @@ public class User {
         return type;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUsernum(String usernum) {
+        this.usernum = usernum;
     }
 
     public void setUsername(String username) {

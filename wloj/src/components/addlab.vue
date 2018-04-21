@@ -39,7 +39,22 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log('submit!')
+      console.log(this.form.input)
+      this.$ajxj({
+        method: 'post',
+        url: '/lab/add',
+        params: {
+          labNum: this.form.num,
+          labName: this.form.name,
+          labContent: this.form.desc,
+          labInput: this.form.input,
+          labOutput: this.form.output
+        }
+      })
+        .then(response => {
+          let data = response
+          console.log(data.code)
+        })
     }
   }
 }

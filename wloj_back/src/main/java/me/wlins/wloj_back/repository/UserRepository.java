@@ -11,9 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
     /*
-     * @param username
+     * @param usernum
      * @Description: find user by username
      * @Date: 下午8:20 18-3-31
      */
-    User findFirstByUsernameAndAndPassword(String username, String password);
+    User findFirstByUsernumAndPassword(String usernum, String password);
 }
