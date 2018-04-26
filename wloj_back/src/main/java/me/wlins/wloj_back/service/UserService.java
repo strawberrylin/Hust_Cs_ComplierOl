@@ -21,4 +21,10 @@ public interface UserService {
      * @Date: 下午8:15 18-3-31
      */
     User checkLogin(String usernum, String password);
+    /*
+     * @param usernum
+     * @Description:
+     * @Date: 下午3:21 18-4-25
+     */
+    User findByUsernum(String usernum);
 }

@@ -11,6 +11,9 @@ import me.wlins.wloj_back.repository.LabRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 @Service
 public class LabServiceImpl implements LabService{
     @Autowired
@@ -19,5 +22,15 @@ public class LabServiceImpl implements LabService{
     @Override
     public Lab saveLab(Lab lab){
         return labRespository.save(lab);
+    }
+
+    @Override
+    public ArrayList<Lab> findAll(){
+        return labRespository.findAll();
+    }
+
+    @Override
+    public Lab findLabByLabNum(int labNum){
+        return labRespository.findLabByLabNum(labNum);
     }
 }

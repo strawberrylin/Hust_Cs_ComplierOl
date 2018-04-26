@@ -1,5 +1,15 @@
 <template>
-  <codemirror v-model="code"></codemirror>
+  <el-container style="height:100vx;" direction=vertical>
+    <codemirror
+    :value="code"
+    ref="myEditor"
+    style="width:100%;border:0;"
+    >
+    </codemirror>
+    <div style="border-left: 30px solid #FFFFFF;background-color:#363636;height: 32px;">
+      <el-button type="primary" v-on:click="onClickSubmit">提交<i class="el-icon-upload el-icon--right"></i></el-button>
+    </div>
+  </el-container>
 </template>
 
 <script>
@@ -32,7 +42,11 @@ export default {
   mounted () {
     // use editor object...
     this.editor.focus()
-    console.log('this is current editor object', this.editor)
+  },
+  methods: {
+    onClickSubmit: function () {
+      this.$emit('listenToChildEvent', this.editor.getValue())
+    }
   }
 }
 </script>

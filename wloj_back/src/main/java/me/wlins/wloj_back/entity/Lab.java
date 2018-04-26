@@ -41,6 +41,8 @@ public class Lab {
         this.outputPath = outputPath;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "id.lab")
+    private Set<Record> records = new HashSet<Record>();
     public int getLabNum() {
         return labNum;
     }
@@ -81,6 +83,5 @@ public class Lab {
         this.outputPath = outputPath;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "id.lab")
-    private Set<Record> records = new HashSet<Record>();
+
 }

@@ -25,4 +25,9 @@ public class UserServiceImpl implements UserService{
     public User checkLogin(String usernum, String password){
         return userRepository.findFirstByUsernumAndPassword(usernum, password);
     }
+
+    @Override
+    public User findByUsernum(String usernum){
+        return userRepository.findByUsernum(usernum);
+    }
 }

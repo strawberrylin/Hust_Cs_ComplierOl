@@ -25,6 +25,12 @@ public class Record {
     @Column
     private Date recordDate;
 
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumns({
+        @JoinColumn(name = "userNum"),
+        @JoinColumn(name = "labNum")
+    })
+
     public MainKey getId() {
         return id;
     }
@@ -56,4 +62,16 @@ public class Record {
     public void setRecordDate(Date recordDate) {
         this.recordDate = recordDate;
     }
+
+    public Record() {
+    }
+
+    public Record(MainKey id, String recordPath, String resultPath, Date recordDate) {
+        this.id = id;
+        this.recordPath = recordPath;
+        this.resultPath = resultPath;
+        this.recordDate = recordDate;
+    }
+
+
 }

@@ -9,11 +9,17 @@ package me.wlins.wloj_back.repository;
 import me.wlins.wloj_back.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, String>{
     /*
      * @param usernum
      * @Description: find user by username
      * @Date: 下午8:20 18-3-31
      */
     User findFirstByUsernumAndPassword(String usernum, String password);
+    /*
+     * @param usernum
+     * @Description: 
+     * @Date: 下午3:23 18-4-25
+     */
+    User findByUsernum(String usernum);
 }

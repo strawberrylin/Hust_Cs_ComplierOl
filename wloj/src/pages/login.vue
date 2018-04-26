@@ -75,7 +75,19 @@ export default {
             } else if (data.data.type === 1) {
               this.$router.push({path: '/teacher/'})
             } else if (data.data.type === 2) {
-              this.$router.push({path: '/student'})
+              this.$ajxj({
+                method: 'get',
+                url: '/lab/list'
+              })
+                .then(response => {
+                  let data2 = response
+                  if (data2.code === 200) {
+                    this.$router.push({
+                      name: 'student',
+                      params: data2.data
+                    })
+                  }
+                })
             }
             this.msg = data.message
           }

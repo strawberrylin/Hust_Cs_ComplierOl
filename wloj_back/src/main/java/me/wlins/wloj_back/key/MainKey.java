@@ -19,7 +19,15 @@ public class MainKey implements Serializable{
     @JoinColumn(name = "usernum", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "labnum", nullable = false)
     private Lab lab;
+
+    public MainKey() {
+    }
+
+    public MainKey(User user, Lab lab) {
+        this.user = user;
+        this.lab = lab;
+    }
 }

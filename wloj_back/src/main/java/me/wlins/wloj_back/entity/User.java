@@ -17,7 +17,7 @@ public class User {
     @Id
     @NotNull(message = "num is required")
     @Column(unique = true, nullable = false)
-    private String usernum; //primary key, auto-increament
+    private String usernum; //primary key
 
     @NotNull(message = "username is required")
     @Column(nullable = false)

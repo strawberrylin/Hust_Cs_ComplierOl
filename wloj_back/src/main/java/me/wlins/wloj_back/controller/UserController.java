@@ -8,6 +8,7 @@ package me.wlins.wloj_back.controller;
 
 import me.wlins.wloj_back.entity.RestResult;
 import me.wlins.wloj_back.entity.User;
+import me.wlins.wloj_back.service.LabService;
 import me.wlins.wloj_back.service.UserService;
 import me.wlins.wloj_back.util.ResultGenerator;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class UserController {
     private final ResultGenerator resultGenerator;
 
     @Autowired
-    public UserController(UserService userService, ResultGenerator resultGenerator) {
+    public UserController(UserService userService, LabService labService, ResultGenerator resultGenerator) {
         this.userService = userService;
         this.resultGenerator = resultGenerator;
     }
@@ -46,6 +47,7 @@ public class UserController {
         if(user != null){
             // store in session
             session.setAttribute("user", user);
+
             return resultGenerator.getSuccessResult("Login Sucessfully", user);
         }
         return resultGenerator.getFailResult("Incorrect username/password");

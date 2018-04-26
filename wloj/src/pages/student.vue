@@ -5,7 +5,7 @@
         <el-col :span="5"><div class="grid-content bg-purple"></div>实验代码提交与检测系统</el-col>
         <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple">
-          <el-dropdown @command="handleCommand">
+          <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown" >
               <el-dropdown-item>个人中心</el-dropdown-item>
@@ -20,21 +20,36 @@
     </el-header>
     <el-container>
       <el-aside style="width: 200px;background-color: #FFFFFF">
-        <el-menu :default-openeds="['1']">
+        <el-menu
+        :default-openeds="['1']"
+        @select="handleSelect"
+        >
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-menu"></i>实验</template>
-          <el-menu-item-group>
-            <el-menu-item index="1-1">字符串操作实验</el-menu-item>
-            <el-menu-item index="1-2">多线程实验</el-menu-item>
-            <el-menu-item index="1-3">多进程实验</el-menu-item>
-            <el-menu-item index="1-4">共享内存实验</el-menu-item>
-            <el-menu-item index="1-5">文件系统实验</el-menu-item>
+          <el-menu-item-group
+            v-for="item in asideItems"
+            :key="item.labNum"
+            >
+            <el-menu-item :index="''+item.labNum" v-text="item.labName"></el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         </el-menu>
       </el-Aside>
       <el-container>
-        <el-aside style="background-color: #FFFFFF;border: 2px solid #9E9E9E;">题目</el-aside>
+        <el-aside style="border: 2px solid #9E9E9E;">
+          <el-main style="text-align:center;">
+            题目：{{this.labname}}
+          </el-main>
+          <el-main>
+            要求:{{this.question}}
+          </el-main>
+          <el-main>
+            样例输入:{{this.input}}
+          </el-main>
+          <el-main>
+            样例输出:{{this.output}}
+          </el-main>
+        </el-aside>
         <el-container>
           <el-header style="background-color: #696969;height:40px;line-height:36px">
             <el-row :gutter="20">
@@ -70,15 +85,25 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content bg-purple">
-                  <el-button type="primary">提交<i class="el-icon-upload el-icon--right"></i></el-button>
                 </div>
               </el-col>
             </el-row>
           </el-header>
-          <Editor></Editor>
-          <el-main style="background-color:#FFFFFF;border-top: 30px solid #FDF5E6;border-left: 30px solid #FDF5E6;color:green;">
-            Hello, this is the output.
+          <Editor v-on:listenToChildEvent="getCode"></Editor>
+          <el-container style="height:100vx;">
+          <el-main style="background-color:#FFFFFF;border-left: 30px solid #FDF5E6;color:green;">
+            <el-table
+            :data="resultData"
+            style="width:100%;"
+            height="200">
+              <el-table-column
+              fixed
+              prop="result"
+              >
+              </el-table-column>
+            </el-table>
           </el-main>
+          </el-container>
         </el-container>
       </el-container>
     </el-container>
@@ -109,7 +134,14 @@ export default {
       }],
       value: '',
       inputC: '',
-      inputR: ''
+      inputR: '',
+      labname: '',
+      question: '',
+      input: '',
+      output: '',
+      asideItems: this.$route.params,
+      labnum: '',
+      resultData: []
     }
   },
   components: {
@@ -118,6 +150,53 @@ export default {
   computed: {
     isLogin: function () {
       return this.$store.state.login.isLogin
+    }
+  },
+  methods: {
+    onClickSubmit: function () {
+      console.log(this.$route.params[1].labNum)
+    },
+    handleSelect: function (key, keyPath) {
+      this.labnum = key
+      this.$ajxj({
+        method: 'post',
+        url: '/lab/question',
+        params: {
+          labNum: key
+        }
+      })
+        .then((response) => {
+          let data = response
+          if (data.code === 200) {
+            this.labname = data.data[0]
+            this.question = data.data[1]
+            this.input = data.data[2]
+            this.output = data.data[3]
+          }
+        })
+    },
+    getCode: function (data) {
+      this.$ajxj({
+        method: 'post',
+        url: '/lab/compile',
+        params: {
+          labNum: this.labnum,
+          usernum: this.$store.state.user.usernum,
+          code: data
+        }
+      })
+        .then((response) => {
+          let data = response
+          if (data.code === 200) {
+            let arr = []
+            for (let i = 0; i < data.data.length; i++) {
+              var obj = {}
+              obj.result = data.data[i]
+              arr[i] = obj
+            }
+            this.resultData = arr
+          }
+        })
     }
   }
 }
@@ -136,6 +215,5 @@ export default {
   }
   .el-main {
     background-color: #E9EEF3;
-    border-top: 1px solid #363636;
   }
 </style>
