@@ -7,8 +7,13 @@ package me.wlins.wloj_back.repository;
  */
 
 import me.wlins.wloj_back.entity.Record;
+import me.wlins.wloj_back.key.MainKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RecordRepository extends JpaRepository<Record, Integer>{
+import java.util.List;
 
+public interface RecordRepository extends JpaRepository<Record, String>{
+    List<Record> findRecordsByMainKey_User_Usernum(String usernum);
+
+    List<Record> findRecordsByMainKey_Lab_LabNum(int labnum);
 }

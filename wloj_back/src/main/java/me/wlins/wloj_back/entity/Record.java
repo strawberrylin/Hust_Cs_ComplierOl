@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 public class Record {
     @EmbeddedId
-    private MainKey id;
+    private MainKey mainKey;
 
     @Column
     private String recordPath;
@@ -25,15 +25,22 @@ public class Record {
     @Column
     private Date recordDate;
 
+    @Column
+    private int score;
+
+    @Column int state;
+
+    public MainKey getMainKey() {
+        return mainKey;
+    }
+
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumns({
         @JoinColumn(name = "userNum"),
         @JoinColumn(name = "labNum")
     })
 
-    public MainKey getId() {
-        return id;
-    }
+
 
     public String getRecordPath() {
         return recordPath;
@@ -47,8 +54,8 @@ public class Record {
         return recordDate;
     }
 
-    public void setId(MainKey id) {
-        this.id = id;
+    public void setMainKey(MainKey mainKey) {
+        this.mainKey = mainKey;
     }
 
     public void setRecordPath(String recordPath) {
@@ -63,11 +70,27 @@ public class Record {
         this.recordDate = recordDate;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public int getState() {
+        return state;
+    }
+
     public Record() {
     }
 
-    public Record(MainKey id, String recordPath, String resultPath, Date recordDate) {
-        this.id = id;
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public Record(MainKey mainKey, String recordPath, String resultPath, Date recordDate) {
+        this.mainKey = mainKey;
         this.recordPath = recordPath;
         this.resultPath = resultPath;
         this.recordDate = recordDate;

@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height:100vh;background-color: #E9EEF3;justify-content:center;align-items;center;">
+  <el-container v-if="isLogin" style="height:100vh;background-color: #E9EEF3;justify-content:center;align-items;center;">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="实验记录" name="first">
         <el-container>
@@ -28,9 +28,6 @@
         <el-container>
           <el-main id="reset">
           <el-form ref="form" label-width="80px" >
-            <el-form-item label="帐号">
-              <el-input v-model="form.name" placeholder="请输入学号"></el-input>
-            </el-form-item>
             <el-form-item label="原密码">
               <el-input v-model="form.oldpassword" type="password" placeholder="初始密码为123456"></el-input>
             </el-form-item>
@@ -60,7 +57,6 @@ export default {
       }],
       activeName: 'first',
       form: {
-        name: '',
         oldpassword: '',
         newpassword: ''
       }
@@ -72,6 +68,11 @@ export default {
     },
     handleClick (tab, event) {
       console.log(tab, event)
+    }
+  },
+  computed: {
+    isLogin: function () {
+      return this.$store.state.login.isLogin
     }
   }
 }

@@ -8,6 +8,8 @@ package me.wlins.wloj_back.service;
 
 import me.wlins.wloj_back.entity.Record;
 
+import java.util.List;
+
 public interface RecordService {
     /*
      * @param record
@@ -15,4 +17,16 @@ public interface RecordService {
      * @Date: 下午3:36 18-4-25
      */
     Record saveRecord(Record record);
+    /*
+     * @param usernum
+     * @Description:
+     * @Date: 下午7:43 18-4-27
+     */
+    List<Record> findRecordsByIdUsernum(String usernum);
+    /*
+     * @param labnum
+     * @Description:
+     * @Date: 下午7:43 18-4-27
+     */
+    List<Record> findRecordsByIdLabnum(int labnum);
 }

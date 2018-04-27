@@ -5,12 +5,11 @@
         <el-col :span="5"><div class="grid-content bg-purple"></div>实验代码提交与检测系统</el-col>
         <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
         <el-col :span="4"><div class="grid-content bg-purple">
-          <el-dropdown>
+          <el-dropdown @command="handleCommand">
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown" >
-              <el-dropdown-item>个人中心</el-dropdown-item>
-              <el-dropdown-item>实验记录</el-dropdown-item>
-              <el-dropdown-item>注销</el-dropdown-item>
+              <el-dropdown-item command="person">个人中心</el-dropdown-item>
+              <el-dropdown-item command="logout">注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <el-button type="success" class="userIcon">{{$store.state.user.username}}</el-button>
@@ -113,6 +112,9 @@
 
 <script>
 import Editor from '../components/editor.vue'
+import {
+  mapActions
+} from 'vuex'
 export default {
   data () {
     return {
@@ -153,6 +155,44 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['logOut', 'loginFail']),
+    onLogout: function () {
+      this.logOut()
+      this.loginFail()
+      this.$router.push({path: '/login'})
+    },
+    person: function () {
+      this.$ajxj({
+        method: 'post',
+        url: '/record/personal',
+        params: {
+          usernum: this.$store.state.user.usernum
+        }
+      })
+        .then((response) => {
+          let data = response
+          let arr = []
+          if (data.code === 200) {
+            for (let i = 0;i < data.data.length; i++) {
+              var obj = {}
+              obj = data.data[i]
+              arr[i] = obj
+            }
+            this.$router.push({
+            path: 'person',
+            params: arr
+            })
+          }
+        })
+    },
+    handleCommand (command) {
+      if (command === 'logout') {
+        this.onLogout()
+      }
+      if (command === 'person') {
+        this.person()
+      }
+    },
     onClickSubmit: function () {
       console.log(this.$route.params[1].labNum)
     },
