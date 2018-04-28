@@ -30,4 +30,20 @@ public class MainKey implements Serializable{
         this.user = user;
         this.lab = lab;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Lab getLab() {
+        return lab;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setLab(Lab lab) {
+        this.lab = lab;
+    }
 }

@@ -32,7 +32,7 @@ public class User {
     @Column(nullable = false)
     private Integer type;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "mainKey.user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "mainKey.user")
     private Set<Record> records = new HashSet<Record>();
 
     // seter and geter

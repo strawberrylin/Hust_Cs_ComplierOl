@@ -173,14 +173,22 @@ export default {
           let data = response
           let arr = []
           if (data.code === 200) {
-            for (let i = 0;i < data.data.length; i++) {
+            for (let i = 0; i < data.data.length; i++) {
               var obj = {}
-              obj = data.data[i]
+              obj.date = data.data[i].date
+              obj.experiment = data.data[i].mainKey.lab.labName
+              if (data.data[i].state === 0) {
+                obj.status = '未查看'
+              } else if (data.data[i].state === 1) {
+                obj.status = '已批阅'
+              }
+              obj.score = data.data[i].score
               arr[i] = obj
             }
+            console.log(arr)
             this.$router.push({
-            path: 'person',
-            params: arr
+              name: 'person',
+              params: arr
             })
           }
         })

@@ -9,6 +9,7 @@ package me.wlins.wloj_back.entity;
 import me.wlins.wloj_back.key.MainKey;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -23,24 +24,17 @@ public class Record {
     private String resultPath;
 
     @Column
-    private Date recordDate;
+    private String date;
 
     @Column
     private int score;
 
-    @Column int state;
+    @Column
+    private int state;
 
     public MainKey getMainKey() {
         return mainKey;
     }
-
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumns({
-        @JoinColumn(name = "userNum"),
-        @JoinColumn(name = "labNum")
-    })
-
-
 
     public String getRecordPath() {
         return recordPath;
@@ -50,8 +44,8 @@ public class Record {
         return resultPath;
     }
 
-    public Date getRecordDate() {
-        return recordDate;
+    public String getDate() {
+        return date;
     }
 
     public void setMainKey(MainKey mainKey) {
@@ -66,8 +60,8 @@ public class Record {
         this.resultPath = resultPath;
     }
 
-    public void setRecordDate(Date recordDate) {
-        this.recordDate = recordDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getScore() {
@@ -89,12 +83,12 @@ public class Record {
         this.state = state;
     }
 
-    public Record(MainKey mainKey, String recordPath, String resultPath, Date recordDate) {
+    public Record(MainKey mainKey, String recordPath, String resultPath, String date, int score, int state) {
         this.mainKey = mainKey;
         this.recordPath = recordPath;
         this.resultPath = resultPath;
-        this.recordDate = recordDate;
+        this.date = date;
+        this.score = score;
+        this.state = state;
     }
-
-
 }

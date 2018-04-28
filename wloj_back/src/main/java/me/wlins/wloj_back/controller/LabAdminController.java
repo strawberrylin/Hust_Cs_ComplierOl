@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -85,7 +87,9 @@ public class LabAdminController {
         User user = userService.findByUsernum(usernum);
         Lab lab = labService.findLabByLabNum(labNum);
         MainKey mainKey = new MainKey(user,lab);
-        Record record = new Record(mainKey,recordPath,resultPath,new Date());
+
+        System.out.println((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
+        Record record = new Record(mainKey,recordPath,resultPath,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),0,0);
         Record ro = recordService.saveRecord(record);
         if(ro != null) {
             return resultGenerator.getSuccessResult("Here is the output", outputResult);

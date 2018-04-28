@@ -11,6 +11,7 @@ import me.wlins.wloj_back.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,12 +25,12 @@ public class RecordServiceImpl implements RecordService{
     }
 
     @Override
-    public List<Record> findRecordsByIdUsernum(String usernum){
+    public ArrayList<Record> findRecordsByIdUsernum(String usernum){
         return recordRepository.findRecordsByMainKey_User_Usernum(usernum);
     }
 
     @Override
-    public List<Record> findRecordsByIdLabnum(int labnum){
+    public ArrayList<Record> findRecordsByIdLabnum(int labnum){
         return recordRepository.findRecordsByMainKey_Lab_LabNum(labnum);
     }
 }

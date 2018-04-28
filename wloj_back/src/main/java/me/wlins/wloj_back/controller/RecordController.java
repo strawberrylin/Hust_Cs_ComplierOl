@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/record")
@@ -32,10 +32,7 @@ public class RecordController {
 
     @PostMapping("/personal")
     public RestResult getPersonalRecords(@NotNull(message = "UserNum is required") String usernum){
-        List<Record> records = recordService.findRecordsByIdUsernum(usernum);
-        if(records != null){
-            resultGenerator.getSuccessResult("Lab Records", records);
-        }
-        return  resultGenerator.getFailResult("Quire failed");
+        ArrayList<Record> records = recordService.findRecordsByIdUsernum(usernum);
+        return resultGenerator.getSuccessResult("Lab Records", records);
     }
 }

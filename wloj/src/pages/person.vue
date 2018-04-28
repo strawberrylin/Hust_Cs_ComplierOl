@@ -4,7 +4,7 @@
       <el-tab-pane label="实验记录" name="first">
         <el-container>
           <el-main>
-            <el-table :data="tableData" max-height="250">
+            <el-table :data="tableData" max-height="500">
               <el-table-column fixed prop="date" label="日期" width="150">
               </el-table-column>
               <el-table-column prop="experiment" label="实验" width="300px">
@@ -49,12 +49,7 @@
 export default {
   data () {
     return {
-      tableData: [{
-        date: '2018-4-12',
-        experiment: '实验一',
-        status: '未评分',
-        score: '0'
-      }],
+      tableData: this.$route.params,
       activeName: 'first',
       form: {
         oldpassword: '',
@@ -68,6 +63,12 @@ export default {
     },
     handleClick (tab, event) {
       console.log(tab, event)
+    },
+    onSubmit: function () {
+
+    },
+    test: function () {
+      console.log(this.temp)
     }
   },
   computed: {
