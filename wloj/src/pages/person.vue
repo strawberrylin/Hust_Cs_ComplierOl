@@ -15,7 +15,7 @@
               </el-table-column>
               <el-table-column fixed="right" label="操作" width="150">
                 <template slot-scope="scope">
-                  <el-button @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small">
+                  <el-button @click="lookup(scope.$index,scope.row)" type="text" size="small">
                     查看
                   </el-button>
                 </template>
@@ -46,10 +46,13 @@
 </template>
 
 <script>
+
+import md5 from 'js-md5'
 export default {
   data () {
     return {
-      tableData: this.$route.params,
+      data: this.$route.params,
+      tableData: [],
       activeName: 'first',
       form: {
         oldpassword: '',
@@ -57,23 +60,77 @@ export default {
       }
     }
   },
+  mounted: function () {
+    this.getRecord()
+  },
   methods: {
-    deleteRow (index, rows) {
-      rows.splice(index, 1)
+    lookup: function (index, row) {
+      this.$ajxj({
+        method: 'post',
+        url: '/record/detail',
+        params: {
+          codepath: this.data[index].recordPath,
+          outputpath: this.data[index].resultPath
+        }
+      })
+        .then((response) => {
+          let data = response
+          if (data.code === 200) {
+            this.$router.push({
+              name: 'detail',
+              params: data.data
+            })
+          }
+        })
     },
     handleClick (tab, event) {
       console.log(tab, event)
     },
     onSubmit: function () {
-
+      this.$ajxj({
+        method: 'post',
+        url: '/user/update',
+        params: {
+          usernum: this.$store.state.user.usernum,
+          oldpassword: md5(this.form.oldpassword),
+          newpassword: md5(this.form.newpassword)
+        }
+      })
+        .then((response) => {
+          let data = response
+          if (data.code === 200) {
+            this.form.oldpassword = ''
+            this.form.newpassword = ''
+          }
+        })
     },
-    test: function () {
-      console.log(this.temp)
+    getRecord: function () {
+      let arr = []
+      if (this.tableData.length === 0) {
+        this.data = []
+        let i = 0
+        for (var n in this.$store.state.record) {
+          this.data[i++] = this.$store.state.record[n]
+        }
+      }
+      for (let i = 0; i < this.data.length; i++) {
+        var obj = {}
+        obj.date = this.data[i].date
+        obj.experiment = this.data[i].mainKey.lab.labName
+        if (this.data[i].state === 0) {
+          obj.status = '未查看'
+        } else if (this.data[i].state === 1) {
+          obj.status = '已批阅'
+        }
+        obj.score = this.data[i].score
+        arr[i] = obj
+      }
+      this.tableData = arr
     }
   },
   computed: {
     isLogin: function () {
-      return this.$store.state.login.isLogin
+      return true
     }
   }
 }

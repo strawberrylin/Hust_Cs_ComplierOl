@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     // import function from store.action
-    ...mapActions(['logIn', 'loginSuccess']),
+    ...mapActions(['logIn', 'loginSuccess', 'storeLab']),
     onSubmit: function (e) {
       if (this.onLogging) {
         this.msg = '正在登录中'
@@ -82,6 +82,7 @@ export default {
                 .then(response => {
                   let data2 = response
                   if (data2.code === 200) {
+                    this.storeLab(data2.data)
                     this.$router.push({
                       name: 'student',
                       params: data2.data

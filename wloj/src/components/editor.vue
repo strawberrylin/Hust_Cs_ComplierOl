@@ -27,9 +27,10 @@ require('codemirror/addon/hint/anyword-hint.js')
 export default {
   data () {
     return {
-      code: '#include<stdlib.h>\n#include<stdio.h>\n\nint main(){\n    return 0;\n}'
+      code: '#include<stdlib.h>\n#include<stdio.h>\n\nint main(){\n//TODO: YOUR OWN CODE.\n    return 0;\n}'
     }
   },
+  props: ['type'],
   components: {
     codemirror
   },
@@ -46,6 +47,19 @@ export default {
   methods: {
     onClickSubmit: function () {
       this.$emit('listenToChildEvent', this.editor.getValue())
+    }
+  },
+  watch: {
+    type: function () {
+      if (this.type === '选项1') {
+        this.code = '#include<stdlib.h>\n#include<stdio.h>\n\nint main(){\n//TODO: YOUR OWN CODE.\n    return 0;\n}'
+      } else if (this.type === '选项2') {
+        this.code = '#include<iostream>\nusing namespace std;\n//TODO: YOUR OWN CODE.\n'
+      } else if (this.type === '选项3') {
+        this.code = 'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n//TODO: YOUR OWN CODE.    public static void main(String[] args){\n//TODO: YOUR OWN CODE.\n    }\n}'
+      } else if (this.type === '选项4') {
+        this.code = '#!/user/bin/env python\n# coding=utf-8\n#TODO; YPUR OWN CODE.\n'
+      }
     }
   }
 }

@@ -1,14 +1,13 @@
 export default {
   // common information
-  state: {
-    // the state of the login
-    isLogin: false
-  },
+  state: JSON.parse(sessionStorage.getItem('isLogin')) || {'isLogin': false},
   // chanege the state by $store.commit('methodName)
   mutations: {
     loginSuccess (state) {
-      state.isLogin = true
+      sessionStorage.setItem('isLogin', JSON.parse(true))
+      Object.assign(state)
     },
+
     loginFail (state) {
       state.isLogin = false
     }

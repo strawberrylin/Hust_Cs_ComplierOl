@@ -88,7 +88,7 @@
               </el-col>
             </el-row>
           </el-header>
-          <Editor v-on:listenToChildEvent="getCode"></Editor>
+          <Editor v-on:listenToChildEvent="getCode" v-bind:type="value"></Editor>
           <el-container style="height:100vx;">
           <el-main style="background-color:#FFFFFF;border-left: 30px solid #FDF5E6;color:green;">
             <el-table
@@ -130,18 +130,15 @@ export default {
       }, {
         value: '选项4',
         label: 'Python'
-      }, {
-        value: '选项5',
-        label: 'Scala'
       }],
-      value: '',
+      value: '选项1',
       inputC: '',
       inputR: '',
       labname: '',
       question: '',
       input: '',
       output: '',
-      asideItems: this.$route.params,
+      asideItems: this.$store.state.lab,
       labnum: '',
       resultData: []
     }
@@ -155,13 +152,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['logOut', 'loginFail']),
+    ...mapActions(['logOut', 'loginFail', 'storeRecord']),
     onLogout: function () {
       this.logOut()
       this.loginFail()
       this.$router.push({path: '/login'})
     },
     person: function () {
+      console.log(this.$store.state.login.isLogin)
       this.$ajxj({
         method: 'post',
         url: '/record/personal',
@@ -171,24 +169,11 @@ export default {
       })
         .then((response) => {
           let data = response
-          let arr = []
           if (data.code === 200) {
-            for (let i = 0; i < data.data.length; i++) {
-              var obj = {}
-              obj.date = data.data[i].date
-              obj.experiment = data.data[i].mainKey.lab.labName
-              if (data.data[i].state === 0) {
-                obj.status = '未查看'
-              } else if (data.data[i].state === 1) {
-                obj.status = '已批阅'
-              }
-              obj.score = data.data[i].score
-              arr[i] = obj
-            }
-            console.log(arr)
+            this.storeRecord(data.data)
             this.$router.push({
               name: 'person',
-              params: arr
+              params: data.data
             })
           }
         })
@@ -230,7 +215,9 @@ export default {
         params: {
           labNum: this.labnum,
           usernum: this.$store.state.user.usernum,
-          code: data
+          code: data,
+          compile_param: this.inputC,
+          run_param: this.inputR
         }
       })
         .then((response) => {

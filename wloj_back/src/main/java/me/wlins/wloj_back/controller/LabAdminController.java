@@ -74,44 +74,28 @@ public class LabAdminController {
     public RestResult compile(@NotNull(message = "labnum is required") int labNum,
                               @NotNull(message = "username is required") String usernum,
                               @NotNull(message = "code is required") String code,
+                              String compile_param,
+                              String run_param,
                               HttpServletRequest request
                               ){
         String filePathA = request.getServletContext().getRealPath("/") + labNum + File.separator;
         String recordPath = saveFile("main.c", filePathA, code);
-        List<String> outputResult = compile(recordPath);
+        List<String> outputResult = compile(recordPath, compile_param, run_param);
         StringBuffer compileResult = new StringBuffer();
         for(String l: outputResult){
             compileResult.append(l);
+            compileResult.append(System.getProperty("line.separator"));
         }
         String resultPath = saveFile("result.txt",filePathA,compileResult.toString());
         User user = userService.findByUsernum(usernum);
         Lab lab = labService.findLabByLabNum(labNum);
         MainKey mainKey = new MainKey(user,lab);
-
-        System.out.println((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
         Record record = new Record(mainKey,recordPath,resultPath,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),0,0);
         Record ro = recordService.saveRecord(record);
         if(ro != null) {
             return resultGenerator.getSuccessResult("Here is the output", outputResult);
         }
         return resultGenerator.getSuccessResult("Faral error");
-    }
-
-    public String saveFile(String fileName, String filePathA, String fileContent){
-        File filePath = new File(filePathA, fileName);
-        if (!filePath.getParentFile().exists()){
-            filePath.getParentFile().mkdirs();
-        }
-        try{
-            FileOutputStream out = new FileOutputStream(filePathA+fileName);
-            out.write(fileContent.getBytes());
-            out.flush();
-            out.close();
-            System.out.println(filePath.getAbsolutePath());
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-        return filePathA+fileName;
     }
 
     @PostMapping("/question")
@@ -128,8 +112,26 @@ public class LabAdminController {
         return resultGenerator.getSuccessResult("quare Sucessfully", result);
     }
 
-    public StringBuffer getFile(String filePath){
+    public static String saveFile(String fileName, String filePathA, String fileContent){
+        File filePath = new File(filePathA, fileName);
+        if (!filePath.getParentFile().exists()){
+            filePath.getParentFile().mkdirs();
+        }
+        try{
+            FileOutputStream out = new FileOutputStream(filePathA+fileName);
+            out.write(fileContent.getBytes());
+            out.flush();
+            out.close();
+            System.out.println(filePath.getAbsolutePath());
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return filePathA+fileName;
+    }
+
+    public static StringBuffer getFile(String filePath){
         StringBuffer buffer = new StringBuffer();
+        System.out.println(filePath);
         try{
             File fileName = new File(filePath);
             InputStreamReader reader = new InputStreamReader(new FileInputStream(fileName));
@@ -137,6 +139,7 @@ public class LabAdminController {
             String line = null;
             while ((line = bufferedReader.readLine()) != null){
                 buffer.append(line);
+                buffer.append("<br/>");
             }
             System.out.println(buffer);
         }catch (IOException e){
@@ -145,7 +148,7 @@ public class LabAdminController {
         return buffer;
     }
 
-    public List<String> compile(String recordPath){
+    public List<String> compile(String recordPath, String compile_param, String run_param){
         File filePath = new File(recordPath);
         List<String> output = new ArrayList<String>();
         if(!filePath.getParentFile().exists()){
@@ -189,7 +192,7 @@ public class LabAdminController {
                 List<String> processListXI = new ArrayList<String>();
                 processListXE.add(" RUN OUTPUT ERROR :");
                 processListXI.add(" RUN OUTPUT :");
-                String[] cmdX = {"./test"};
+                String[] cmdX = {"./test",run_param};
                 Process processX = Runtime.getRuntime().exec(cmdX,null,filePath.getParentFile());
                 BufferedReader errorX = new BufferedReader(new InputStreamReader(processX.getErrorStream()));
                 BufferedReader inputX = new BufferedReader(new InputStreamReader(processX.getInputStream()));

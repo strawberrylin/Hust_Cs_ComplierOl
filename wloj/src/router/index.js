@@ -5,7 +5,7 @@ import Login from '../pages/login.vue'
 import Student from '../pages/student.vue'
 import Person from '../pages/person.vue'
 import Teacher from '../pages/teacher.vue'
-import Experiment from '../pages/experiment.vue'
+import Detail from '../pages/detail.vue'
 import Admin from '../pages/admin.vue'
 import AddLab from '../components/addlab.vue'
 import UpdateLab from '../components/updatelab.vue'
@@ -40,9 +40,9 @@ export default new Router({
       component: Teacher
     },
     {
-      path: '/experiment',
-      name: 'experiment',
-      component: Experiment
+      path: '/detail',
+      name: 'detail',
+      component: Detail
     },
     {
       path: '/admin/',

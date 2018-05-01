@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @RestController
@@ -34,5 +35,21 @@ public class RecordController {
     public RestResult getPersonalRecords(@NotNull(message = "UserNum is required") String usernum){
         ArrayList<Record> records = recordService.findRecordsByIdUsernum(usernum);
         return resultGenerator.getSuccessResult("Lab Records", records);
+    }
+
+    @PostMapping("/detail")
+    public RestResult getRecordDetail(@NotNull(message = "CodePath is required") String codepath,
+                                      @NotNull(message = "ResultPath is required") String outputpath){
+        ArrayList<String> result = new ArrayList<String>();
+        result.add(readFile(codepath));
+        result.add(readFile(outputpath));
+        if(result != null){
+            return resultGenerator.getSuccessResult(result);
+        }
+        return resultGenerator.getFailResult("Read file failed.");
+    }
+
+    public String readFile(String filePath){
+        return LabAdminController.getFile(filePath).toString();
     }
 }

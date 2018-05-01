@@ -53,6 +53,13 @@ public class UserController {
         return resultGenerator.getFailResult("Incorrect username/password");
     }
 
+    @PostMapping("/update")
+    public RestResult update(@NotNull(message = "UserNum is required") String usernum,
+                             @NotNull(message = "OldPassword is required") String oldpassword,
+                             @NotNull(message = "NewPassword is required") String newpassword){
+
+    }
+
     // param vertify
     @ExceptionHandler(ConstraintViolationException.class)
     public RestResult handleConstraintViolationException(ConstraintViolationException cve) {

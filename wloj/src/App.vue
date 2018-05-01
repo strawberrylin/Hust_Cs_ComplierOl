@@ -9,7 +9,7 @@ import Login from './pages/login.vue'
 import Person from './pages/person.vue'
 import Student from './pages/student.vue'
 import Teacher from './pages/teacher.vue'
-import Experiment from './pages/experiment.vue'
+import Detail from './pages/detail.vue'
 import Admin from './pages/admin.vue'
 
 export default {
@@ -18,7 +18,7 @@ export default {
     Login,
     Person,
     Teacher,
-    Experiment,
+    Detail,
     Admin
   },
   name: 'App'
