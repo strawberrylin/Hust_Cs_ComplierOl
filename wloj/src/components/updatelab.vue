@@ -25,7 +25,6 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">更新</el-button>
-        <el-button type="success">退出</el-button>
       </el-form-item>
     </el-form>
   </el-container>
@@ -37,33 +36,80 @@ export default {
     return {
       form: {
         name: '',
-        num: '',
         desc: '',
         input: '',
-        output: ''
+        output: '',
+        data: []
       },
-      options: [{
-        value: '实验1',
-        label: ''
-      }, {
-        value: '实验2',
-        label: ''
-      }, {
-        value: '实验3',
-        label: ''
-      }, {
-        value: '实验4',
-        label: ''
-      }, {
-        value: '实验5',
-        label: ''
-      }],
+      options: [],
       value: ''
     }
   },
   methods: {
     onSubmit () {
-      console.log('submit!')
+      this.$ajxj({
+        method: 'post',
+        url: '/lab/update',
+        params: {
+          labNum: this.value,
+          labName: this.form.name,
+          labContent: this.form.desc,
+          labInput: this.form.input,
+          labOutput: this.form.output
+        }
+      })
+        .then(response => {
+          let data = response
+          if (data.code === 200) {
+          }
+        })
+    },
+    getLabList () {
+      this.$ajxj({
+        method: 'get',
+        url: '/lab/list'
+      })
+        .then(response => {
+          let data = response
+          if (data.code === 200) {
+            this.data = data.data
+            let arr = []
+            for (let i = 0; i < data.data.length; i++) {
+              var obj = {}
+              obj.value = data.data[i].labNum
+              obj.label = ''
+              arr[i] = obj
+            }
+            this.options = arr
+          }
+        })
+    }
+  },
+  mounted: function () {
+    this.getLabList()
+  },
+  watch: {
+    value: function () {
+      for (let i = 0; i < this.data.length; i++) {
+        if (this.value === this.data[i].labNum) {
+          this.form.name = this.data[i].labName
+        }
+      }
+      this.$ajxj({
+        method: 'post',
+        url: '/lab/question',
+        params: {
+          labNum: this.value
+        }
+      })
+        .then((response) => {
+          let data = response
+          if (data.code === 200) {
+            this.form.desc = data.data[1]
+            this.form.input = data.data[2]
+            this.form.output = data.data[3]
+          }
+        })
     }
   }
 }

@@ -69,4 +69,14 @@ public class User {
     public void setType(Integer type) {
         this.type = type;
     }
+
+    public User() {
+    }
+
+    public User(@NotNull(message = "num is required") String usernum, @NotNull(message = "username is required") String username, @NotNull(message = "password is required") @Size(min = 6, max = 128, message = "6~18　is required") String password, @NotNull(message = "type is required") Integer type) {
+        this.usernum = usernum;
+        this.username = username;
+        this.password = password;
+        this.type = type;
+    }
 }

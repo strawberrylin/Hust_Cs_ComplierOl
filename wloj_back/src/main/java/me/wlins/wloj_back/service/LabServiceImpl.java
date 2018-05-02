@@ -33,4 +33,14 @@ public class LabServiceImpl implements LabService{
     public Lab findLabByLabNum(int labNum){
         return labRespository.findLabByLabNum(labNum);
     }
+
+    @Override
+    public int updateLab(String labName, int labNum, String labPath, String inputPath, String outputPath){
+        return labRespository.updateLab(labName, labNum, labPath, inputPath, outputPath);
+    }
+
+    @Override
+    public int deleteLabByLabNum(int labNum){
+        return labRespository.deleteLabByLabNum(labNum);
+    }
 }

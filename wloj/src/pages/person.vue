@@ -48,6 +48,9 @@
 <script>
 
 import md5 from 'js-md5'
+import {
+  mapActions
+} from 'vuex'
 export default {
   data () {
     return {
@@ -64,6 +67,7 @@ export default {
     this.getRecord()
   },
   methods: {
+    ...mapActions(['logOut', 'loginFail']),
     lookup: function (index, row) {
       this.$ajxj({
         method: 'post',
@@ -99,8 +103,9 @@ export default {
         .then((response) => {
           let data = response
           if (data.code === 200) {
-            this.form.oldpassword = ''
-            this.form.newpassword = ''
+            this.logOut()
+            this.loginFail()
+            this.$router.push({path: '/login'})
           }
         })
     },

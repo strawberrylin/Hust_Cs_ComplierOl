@@ -9,7 +9,8 @@ export default {
     },
 
     loginFail (state) {
-      state.isLogin = false
+      sessionStorage.setItem('isLogin', JSON.parse(false))
+      Object.assign(state)
     }
   },
   // change the state

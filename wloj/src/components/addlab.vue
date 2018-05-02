@@ -18,7 +18,6 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">添加</el-button>
-        <el-button type="success">退出</el-button>
       </el-form-item>
     </el-form>
   </el-container>
@@ -39,7 +38,6 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log(this.form.input)
       this.$ajxj({
         method: 'post',
         url: '/lab/add',
@@ -53,7 +51,13 @@ export default {
       })
         .then(response => {
           let data = response
-          console.log(data.code)
+          if (data.code === 200) {
+            this.form.num = ''
+            this.form.name = ''
+            this.form.desc = ''
+            this.form.input = ''
+            this.form.output = ''
+          }
         })
     }
   }

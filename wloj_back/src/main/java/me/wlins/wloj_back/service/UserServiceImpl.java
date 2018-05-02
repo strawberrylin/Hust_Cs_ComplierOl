@@ -9,7 +9,13 @@ package me.wlins.wloj_back.service;
 import me.wlins.wloj_back.entity.User;
 import me.wlins.wloj_back.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -29,5 +35,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findByUsernum(String usernum){
         return userRepository.findByUsernum(usernum);
+    }
+
+    @Override
+    public int updatePassword(String newpassword, String usernum, String oldpassword){
+        return userRepository.updatePassword(newpassword,usernum, oldpassword);
+    }
+
+    @Override
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 }

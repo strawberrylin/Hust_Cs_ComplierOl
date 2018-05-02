@@ -8,6 +8,9 @@ package me.wlins.wloj_back.repository;
 
 import me.wlins.wloj_back.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends JpaRepository<User, String>{
     /*
@@ -22,4 +25,16 @@ public interface UserRepository extends JpaRepository<User, String>{
      * @Date: 下午3:23 18-4-25
      */
     User findByUsernum(String usernum);
+
+    /*
+     * @param newpassword
+     * @param usernum
+     * @param oldpwssword
+     * @Description:
+     * @Date: 上午8:31 18-5-2
+     */
+    @Modifying
+    @Query(value = "update user u set u.password = ?1 where u.usernum = ?2 and u.password = ?3", nativeQuery = true)
+    @Transactional
+    int updatePassword(String newpassword, String usernum, String oldpassword);
 }

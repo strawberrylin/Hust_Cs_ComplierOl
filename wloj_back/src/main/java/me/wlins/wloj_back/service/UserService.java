@@ -8,6 +8,9 @@ package me.wlins.wloj_back.service;
 
 import me.wlins.wloj_back.entity.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface UserService {
     /*
      * @param user
@@ -27,4 +30,20 @@ public interface UserService {
      * @Date: 下午3:21 18-4-25
      */
     User findByUsernum(String usernum);
+
+    /*
+     * @param usernum
+     * @param oldpassword
+     * @param newpassword
+     * @Description:
+     * @Date: 上午8:25 18-5-2
+     */
+    int updatePassword(String newpassword, String usernum, String oldpassword);
+
+    /*
+     * @param null
+     * @Description: query to get all the user
+     * @Date: 上午2:40 18-5-3
+     */
+    List<User> findAll();
 }

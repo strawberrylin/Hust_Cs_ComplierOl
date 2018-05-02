@@ -56,7 +56,7 @@ export default {
       } else if (this.type === '选项2') {
         this.code = '#include<iostream>\nusing namespace std;\n//TODO: YOUR OWN CODE.\n'
       } else if (this.type === '选项3') {
-        this.code = 'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n//TODO: YOUR OWN CODE.    public static void main(String[] args){\n//TODO: YOUR OWN CODE.\n    }\n}'
+        this.code = 'import java.util.*;\nimport java.io.*;\n\npublic class Main{\n//TODO: YOUR OWN CODE.\n    public static void main(String[] args){\n//TODO: YOUR OWN CODE.\n    }\n}'
       } else if (this.type === '选项4') {
         this.code = '#!/user/bin/env python\n# coding=utf-8\n#TODO; YPUR OWN CODE.\n'
       }

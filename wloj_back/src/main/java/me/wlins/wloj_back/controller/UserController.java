@@ -16,14 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @RestController
@@ -57,7 +55,33 @@ public class UserController {
     public RestResult update(@NotNull(message = "UserNum is required") String usernum,
                              @NotNull(message = "OldPassword is required") String oldpassword,
                              @NotNull(message = "NewPassword is required") String newpassword){
+        int x = userService.updatePassword(newpassword, usernum, oldpassword);
+        if(x == 0) {
+            return resultGenerator.getSuccessResult("Update successfully!");
+        }
+        return resultGenerator.getFailResult("Update failed!", x);
+    }
 
+    @PostMapping("/add")
+    public RestResult add(@NotNull(message = "UserNum is required") String userNum,
+                          @NotNull(message = "UserName is required") String userName,
+                          @NotNull(message = "Password is reuird") String password,
+                          @NotNull(message = "Type is reqired") int type) {
+        User user = new User(userNum, userName, password, type);
+        User ru = userService.saveUser(user);
+        if(ru != null){
+            return resultGenerator.getSuccessResult("Add successfully", ru);
+        }
+        return resultGenerator.getFailResult("Add failed");
+    }
+
+    @GetMapping("/list")
+    public RestResult getUserList(){
+        List<User> userList = userService.findAll();
+        if(userList != null){
+            return resultGenerator.getSuccessResult("Query Sucessfully", userList);
+        }
+        return resultGenerator.getFailResult("Query failed");
     }
 
     // param vertify

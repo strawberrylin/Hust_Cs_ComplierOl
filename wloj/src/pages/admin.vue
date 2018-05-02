@@ -49,8 +49,7 @@
               <template slot="title"><i class="el-icon-menu"></i>用户</template>
                 <el-menu-item-group>
                   <el-menu-item index="2-1">添加</el-menu-item>
-                  <el-menu-item index="2-2">删除</el-menu-item>
-                  <el-menu-item index="2-3">修改</el-menu-item>
+                  <el-menu-item index="2-2">更新</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               </el-menu>

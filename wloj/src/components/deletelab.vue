@@ -12,11 +12,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="实验名称">
-        实验名称
+        {{name}}
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">删除</el-button>
-        <el-button type="success">退出</el-button>
       </el-form-item>
     </el-form>
   </el-container>
@@ -26,32 +25,58 @@
 export default {
   data () {
     return {
-      form: {
-        name: '',
-        num: ''
-      },
-      options: [{
-        value: '实验1',
-        label: ''
-      }, {
-        value: '实验2',
-        label: ''
-      }, {
-        value: '实验3',
-        label: ''
-      }, {
-        value: '实验4',
-        label: ''
-      }, {
-        value: '实验5',
-        label: ''
-      }],
+      name: '',
+      options: [],
       value: ''
     }
   },
   methods: {
     onSubmit () {
-      console.log('submit!')
+      this.$ajxj({
+        method: 'post',
+        url: '/lab/delete',
+        params: {
+          labNum: this.value
+        }
+      })
+        .then((response) => {
+          let data = response
+          if (data.code === 200) {
+            this.$router.push({path: '/admin/'})
+          }
+        })
+    },
+    getLabList () {
+      this.$ajxj({
+        method: 'get',
+        url: '/lab/list'
+      })
+        .then(response => {
+          let data = response
+          if (data.code === 200) {
+            this.data = data.data
+            let arr = []
+            for (let i = 0; i < data.data.length; i++) {
+              var obj = {}
+              obj.value = data.data[i].labNum
+              obj.label = ''
+              arr[i] = obj
+            }
+            this.options = arr
+          }
+        })
+    }
+  },
+  mounted: function () {
+    this.getLabList()
+  },
+  watch: {
+    value: function () {
+      for (let i = 0; i < this.data.length; i++) {
+        if (this.value === this.data[i].labNum) {
+          this.name = this.data[i].labName
+        }
+      }
     }
   }
 }

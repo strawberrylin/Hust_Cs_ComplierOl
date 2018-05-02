@@ -112,6 +112,35 @@ public class LabAdminController {
         return resultGenerator.getSuccessResult("quare Sucessfully", result);
     }
 
+    @PostMapping("/update")
+    public RestResult updateLab(@NotNull(message = "LabNum is required") int labNum,
+                                @NotNull(message = "LabName is required") String labName,
+                                @NotNull(message = "LabContent is required") String labContent,
+                                @NotNull(message = "LabInput is required") String labInput,
+                                @NotNull(message = "LabOutput is required") String labOutput,
+                                HttpServletRequest request
+    ) {
+        String filePathA = request.getServletContext().getRealPath("/") + labNum + File.separator;
+        String filePathLab = saveFile("lab.txt", filePathA, labContent);
+        String filePathInput = saveFile("input.txt", filePathA, labInput);
+        String filePathOutput = saveFile("output.txt", filePathA, labOutput);
+        int x = labService.updateLab(labName, labNum, filePathLab, filePathInput, filePathOutput);
+        if(x == 1){
+            return resultGenerator.getSuccessResult("Update sucessfully!");
+        }
+        return resultGenerator.getFailResult("Update failed!");
+    }
+
+    @PostMapping("/delete")
+    public RestResult deleteLab(@NotNull(message = "LabNum is required") int labNum) {
+        int x = labService.deleteLabByLabNum(labNum);
+        System.out.println(x);
+        if(x == 1) {
+            return resultGenerator.getSuccessResult("Delete successfully");
+        }
+        return resultGenerator.getFailResult("Delete failed");
+    }
+
     public static String saveFile(String fileName, String filePathA, String fileContent){
         File filePath = new File(filePathA, fileName);
         if (!filePath.getParentFile().exists()){

@@ -10,6 +10,8 @@ import Admin from '../pages/admin.vue'
 import AddLab from '../components/addlab.vue'
 import UpdateLab from '../components/updatelab.vue'
 import DeleteLab from '../components/deletelab.vue'
+import AddUser from '../components/adduser.vue'
+import UpdateUser from '../components/updateuser.vue'
 
 Vue.use(Router)
 
@@ -63,6 +65,16 @@ export default new Router({
           path: '1-3',
           name: 'deletelab',
           component: DeleteLab
+        },
+        {
+          path: '2-1',
+          name: 'adduser',
+          component: AddUser
+        },
+        {
+          path: '2-2',
+          name: 'updateuser',
+          component: UpdateUser
         }
       ]
     }
