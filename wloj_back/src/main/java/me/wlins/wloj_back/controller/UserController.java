@@ -56,7 +56,7 @@ public class UserController {
                              @NotNull(message = "OldPassword is required") String oldpassword,
                              @NotNull(message = "NewPassword is required") String newpassword){
         int x = userService.updatePassword(newpassword, usernum, oldpassword);
-        if(x == 0) {
+        if(x == 1) {
             return resultGenerator.getSuccessResult("Update successfully!");
         }
         return resultGenerator.getFailResult("Update failed!", x);
@@ -84,6 +84,14 @@ public class UserController {
         return resultGenerator.getFailResult("Query failed");
     }
 
+    @DeleteMapping("/delete")
+    public RestResult delete(@NotNull(message = "UserNum is required") String usernum){
+        int x = userService.deleteUserByUsernum(usernum);
+        if(x == 1){
+            return resultGenerator.getSuccessResult("Delete sucessfully");
+        }
+        return resultGenerator.getFailResult("Delete Failed");
+    }
     // param vertify
     @ExceptionHandler(ConstraintViolationException.class)
     public RestResult handleConstraintViolationException(ConstraintViolationException cve) {

@@ -73,19 +73,32 @@ export default {
             if (data.data.type === 0) {
               this.$router.push({path: '/admin/'})
             } else if (data.data.type === 1) {
-              this.$router.push({path: '/teacher/'})
+              this.$ajxj({
+                method: 'get',
+                url: '/lab/list'
+              })
+                .then((response) => {
+                  let data2 = response
+                  if (data2.code === 200) {
+                    this.storeLab(data2.data)
+                    this.$router.push({
+                      name: 'teacher',
+                      params: data2.data
+                    })
+                  }
+                })
             } else if (data.data.type === 2) {
               this.$ajxj({
                 method: 'get',
                 url: '/lab/list'
               })
                 .then(response => {
-                  let data2 = response
-                  if (data2.code === 200) {
-                    this.storeLab(data2.data)
+                  let data3 = response
+                  if (data3.code === 200) {
+                    this.storeLab(data3.data)
                     this.$router.push({
                       name: 'student',
-                      params: data2.data
+                      params: data3.data
                     })
                   }
                 })

@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container style="justify-content:center;align-items;center;">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="实验次数">
         <el-input v-model="form.num" placeholder="请输入实验次数"></el-input>
@@ -17,7 +17,7 @@
         <el-input type="textarea" v-model="form.output"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">添加</el-button>
+        <el-button type="primary" style="width:230px;" @click="onSubmit">添加</el-button>
       </el-form-item>
     </el-form>
   </el-container>

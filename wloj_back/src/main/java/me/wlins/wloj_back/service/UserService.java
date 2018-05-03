@@ -46,4 +46,11 @@ public interface UserService {
      * @Date: 上午2:40 18-5-3
      */
     List<User> findAll();
+
+    /*
+     * @param usernum
+     * @Description:
+     * @Date: 上午11:36 18-5-3
+     */
+    int deleteUserByUsernum(String usernum);
 }

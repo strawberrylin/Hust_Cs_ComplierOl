@@ -33,4 +33,9 @@ public class RecordServiceImpl implements RecordService{
     public ArrayList<Record> findRecordsByIdLabnum(int labnum){
         return recordRepository.findRecordsByMainKey_Lab_LabNum(labnum);
     }
+
+    @Override
+    public int updateScore(int score, String usernum, int labnum){
+        return recordRepository.updateScore(score, usernum, labnum);
+    }
 }

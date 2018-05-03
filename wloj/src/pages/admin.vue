@@ -31,7 +31,7 @@
               </el-menu>
             </el-aside>
             <el-container>
-              <el-main>
+              <el-main style="width:800px;">
                 <router-view></router-view>
               </el-main>
             </el-container>
@@ -55,7 +55,7 @@
               </el-menu>
             </el-aside>
             <el-container>
-              <el-main>
+              <el-main style="width:800px;">
                 <router-view></router-view>
               </el-main>
             </el-container>

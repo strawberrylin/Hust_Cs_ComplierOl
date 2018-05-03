@@ -1,5 +1,5 @@
 <template>
-  <el-container direction="vertical">
+  <el-container direction="vertical" style="justify-content:center;align-items;center;">
     <el-container>
     <el-table
       :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
@@ -12,7 +12,7 @@
       </el-table-column>
       <el-table-column prop="password" label="密码" width="150">
         <template slot-scope="scope">
-          <el-input v-model="tableData.password"></el-input>
+          <el-input v-model="table.password"></el-input>
         </template>
       </el-table-column>
       <el-table-column prop="type" label="类型" width="150">
@@ -48,9 +48,13 @@
 </template>
 
 <script>
+import md5 from 'js-md5'
 export default {
   data () {
     return {
+      table: {
+        password: ''
+      },
       tableData: [],
       currentPage: 1,
       pageSize: 1
@@ -58,10 +62,33 @@ export default {
   },
   methods: {
     deleteRow (index, rows) {
-      rows.splice(index, 1)
+      this.$ajxj({
+        method: 'delete',
+        url: '/user/delete',
+        params: {
+          usernum: this.tableData[index].account
+        }
+      })
+        .then((response) => {
+          let data = response
+          if (data.code === 200) {
+            rows.splice(index, 1)
+          }
+        })
     },
-    update: function () {
-
+    update: function (index) {
+      this.$ajxj({
+        method: 'post',
+        url: '/user/update',
+        params: {
+          usernum: this.tableData[index].account,
+          oldpassword: this.tableData[index].password,
+          newpassword: md5(this.table.password)
+        }
+      })
+        .then((response) => {
+          this.table.password = ''
+        })
     },
     handleSizeChange: function (size) {
       this.pageSize = size

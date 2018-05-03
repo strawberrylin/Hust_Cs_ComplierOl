@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container style="justify-content:center;align-items;center;">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="姓名">
         <el-input v-model="form.username" placeholder="输入用户名"></el-input>
@@ -18,7 +18,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" width="200px" @click="onClickSubmit">添加</el-button>
+        <el-button type="primary" style="width:230px;" @click="onClickSubmit">添加</el-button>
       </el-form-item>
     </el-form>
   </el-container>

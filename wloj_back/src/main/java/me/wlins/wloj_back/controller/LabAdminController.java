@@ -78,7 +78,7 @@ public class LabAdminController {
                               String run_param,
                               HttpServletRequest request
                               ){
-        String filePathA = request.getServletContext().getRealPath("/") + labNum + File.separator;
+        String filePathA = request.getServletContext().getRealPath("/") + usernum + File.separator + labNum + File.separator;
         String recordPath = saveFile("main.c", filePathA, code);
         List<String> outputResult = compile(recordPath, compile_param, run_param);
         StringBuffer compileResult = new StringBuffer();

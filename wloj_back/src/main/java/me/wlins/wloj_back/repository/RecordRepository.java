@@ -7,8 +7,10 @@ package me.wlins.wloj_back.repository;
  */
 
 import me.wlins.wloj_back.entity.Record;
-import me.wlins.wloj_back.key.MainKey;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,4 +19,9 @@ public interface RecordRepository extends JpaRepository<Record, String>{
     ArrayList<Record> findRecordsByMainKey_User_Usernum(String usernum);
 
     ArrayList<Record> findRecordsByMainKey_Lab_LabNum(int labnum);
+
+    @Modifying
+    @Query(value = "update record r set r.score = ?1, r.state = 1 where r.usernum = ?2 and r.labnum = ?3", nativeQuery = true)
+    @Transactional
+    int updateScore(int score, String usernum, int labnum);
 }

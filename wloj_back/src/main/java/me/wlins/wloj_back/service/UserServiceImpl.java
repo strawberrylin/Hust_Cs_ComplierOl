@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService{
     public List<User> findAll(){
         return userRepository.findAll();
     }
+
+    @Override
+    public int deleteUserByUsernum(String usernum){
+        return userRepository.deleteUserByUsernum(usernum);
+    }
 }

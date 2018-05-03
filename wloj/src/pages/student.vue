@@ -159,7 +159,6 @@ export default {
       this.$router.push({path: '/login'})
     },
     person: function () {
-      console.log(this.$store.state.login.isLogin)
       this.$ajxj({
         method: 'post',
         url: '/record/personal',
@@ -190,12 +189,12 @@ export default {
       console.log(this.$route.params[1].labNum)
     },
     handleSelect: function (key, keyPath) {
-      this.labnum = key
+      this.labnum = this.asideItems[key - 1].labNum
       this.$ajxj({
         method: 'post',
         url: '/lab/question',
         params: {
-          labNum: key
+          labNum: this.labnum
         }
       })
         .then((response) => {

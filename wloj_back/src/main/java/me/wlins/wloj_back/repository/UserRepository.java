@@ -37,4 +37,12 @@ public interface UserRepository extends JpaRepository<User, String>{
     @Query(value = "update user u set u.password = ?1 where u.usernum = ?2 and u.password = ?3", nativeQuery = true)
     @Transactional
     int updatePassword(String newpassword, String usernum, String oldpassword);
+
+    /*
+     * @param usernum
+     * @Description:
+     * @Date: 上午11:35 18-5-3
+     */
+    @Transactional
+    int deleteUserByUsernum(String usernum);
 }

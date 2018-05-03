@@ -30,4 +30,11 @@ public interface RecordService {
      * @Date: 下午7:43 18-4-27
      */
     ArrayList<Record> findRecordsByIdLabnum(int labnum);
+
+    /*
+     * @param usernum
+     * @Description:
+     * @Date: 下午5:12 18-5-3
+     */
+    int updateScore(int score, String usernum, int labnum);
 }
