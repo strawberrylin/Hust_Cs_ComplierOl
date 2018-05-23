@@ -125,7 +125,7 @@ export default {
     width: 220px;
   }
   body{
-    background-image: url(../assets/back.jpg);
+    background-image: url(../assets/back.png);
     background-size: cover;
     width: 100%;
     height: 100%;

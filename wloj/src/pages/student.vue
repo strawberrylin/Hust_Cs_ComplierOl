@@ -37,16 +37,16 @@
       <el-container>
         <el-aside style="border: 2px solid #9E9E9E;">
           <el-main style="text-align:center;">
-            题目：{{this.labname}}
+            题目：<p v-html="this.labname"></p>
           </el-main>
           <el-main>
-            要求:{{this.question}}
+            要求:<p v-html="this.question"></p>
           </el-main>
           <el-main>
-            样例输入:{{this.input}}
+            样例输入:<p v-html="this.input"></p>
           </el-main>
           <el-main>
-            样例输出:{{this.output}}
+            样例输出:<p v-html="this.output"></p>
           </el-main>
         </el-aside>
         <el-container>

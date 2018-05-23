@@ -105,9 +105,10 @@ export default {
         .then((response) => {
           let data = response
           if (data.code === 200) {
-            this.form.desc = data.data[1]
-            this.form.input = data.data[2]
-            this.form.output = data.data[3]
+            var reg = new RegExp('<br/>', 'g')
+            this.form.desc = data.data[1].replace(reg, '\n')
+            this.form.input = data.data[2].replace(reg, '\n')
+            this.form.output = data.data[3].replace(reg, '\n')
           }
         })
     }

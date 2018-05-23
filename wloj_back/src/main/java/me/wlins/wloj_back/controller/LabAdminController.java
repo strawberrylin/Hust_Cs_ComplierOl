@@ -84,7 +84,6 @@ public class LabAdminController {
         StringBuffer compileResult = new StringBuffer();
         for(String l: outputResult){
             compileResult.append(l);
-            compileResult.append(System.getProperty("line.separator"));
         }
         String resultPath = saveFile("result.txt",filePathA,compileResult.toString());
         User user = userService.findByUsernum(usernum);
@@ -189,7 +188,27 @@ public class LabAdminController {
             processListCE.add("COMPLIE OUTPUT ERROR :");
             processListCI.add("COMPLIE OUTPUT :");
             String str = recordPath;
-            String[] cmdC = {"gcc","-g", "-Wall" ,str ,"-o","test"};
+            int length;
+            if(compile_param.equals("")){
+               length = 0;
+            }
+            else {
+                length = compile_param.split(" ").length;
+            }
+            String[] c_param = new String[length];
+            if(length != 0) {
+                c_param = compile_param.split(" ");
+            }
+            String[] cmdC = new String[c_param.length+4];
+            cmdC[0] = "gcc";
+            cmdC[1] = str;
+            cmdC[2] = "-o";
+            cmdC[3] = "test";
+            System.out.println(c_param.length);
+            System.out.print(compile_param);
+            for(int i=0;i <c_param.length;i ++) {
+                cmdC[i+4] = c_param[i];
+            }
             Process processC = Runtime.getRuntime().exec(cmdC,null,filePath.getParentFile());
             BufferedReader errorC = new BufferedReader(new InputStreamReader(processC.getErrorStream()));
             BufferedReader inputC = new BufferedReader(new InputStreamReader(processC.getInputStream()));
@@ -222,7 +241,15 @@ public class LabAdminController {
                 processListXE.add(" RUN OUTPUT ERROR :");
                 processListXI.add(" RUN OUTPUT :");
                 String[] cmdX = {"./test",run_param};
+                DataOutputStream dos = null;
                 Process processX = Runtime.getRuntime().exec(cmdX,null,filePath.getParentFile());
+                dos = new DataOutputStream(processX.getOutputStream());
+                String s = "1 1";
+                System.out.println(s);
+                dos.write(s.getBytes());
+                dos.writeBytes("\n");
+                dos.writeBytes("exit\n");
+                dos.flush();
                 BufferedReader errorX = new BufferedReader(new InputStreamReader(processX.getErrorStream()));
                 BufferedReader inputX = new BufferedReader(new InputStreamReader(processX.getInputStream()));
                 while ((line = errorX.readLine()) != null) {

@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon May 21 17:00:37 CST 2018
+mysql-connector-java-5.1.45.pom>nexus-aliyun=
+mysql-connector-java-5.1.45.jar>nexus-aliyun=
