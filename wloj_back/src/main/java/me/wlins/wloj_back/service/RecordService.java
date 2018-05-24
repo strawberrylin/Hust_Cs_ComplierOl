@@ -37,4 +37,6 @@ public interface RecordService {
      * @Date: 下午5:12 18-5-3
      */
     int updateScore(int score, String usernum, int labnum);
+
+    int updateComment(String comments, String commentt, String usernum, int labnum);
 }

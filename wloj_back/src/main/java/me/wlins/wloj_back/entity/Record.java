@@ -32,6 +32,12 @@ public class Record {
     @Column
     private int state;
 
+    @Column
+    private String commentT;
+
+    @Column
+    private String commentS;
+
     public MainKey getMainKey() {
         return mainKey;
     }
@@ -48,6 +54,14 @@ public class Record {
         return date;
     }
 
+    public String getCommentT() {
+        return commentT;
+    }
+
+    public String getCommentS() {
+        return commentS;
+    }
+
     public void setMainKey(MainKey mainKey) {
         this.mainKey = mainKey;
     }
@@ -62,6 +76,14 @@ public class Record {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setCommentT(String commentT) {
+        this.commentT = commentT;
+    }
+
+    public void setCommentS(String commentS) {
+        this.commentS = commentS;
     }
 
     public int getScore() {
@@ -81,6 +103,17 @@ public class Record {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public Record(MainKey mainKey, String recordPath, String resultPath, String date, int score, int state, String commentT, String commentS) {
+        this.mainKey = mainKey;
+        this.recordPath = recordPath;
+        this.resultPath = resultPath;
+        this.date = date;
+        this.score = score;
+        this.state = state;
+        this.commentT = commentT;
+        this.commentS = commentS;
     }
 
     public Record(MainKey mainKey, String recordPath, String resultPath, String date, int score, int state) {

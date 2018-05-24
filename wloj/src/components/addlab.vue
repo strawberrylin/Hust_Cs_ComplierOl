@@ -51,6 +51,7 @@ export default {
       })
         .then(response => {
           let data = response
+          alert(data.message)
           if (data.code === 200) {
             this.form.num = ''
             this.form.name = ''

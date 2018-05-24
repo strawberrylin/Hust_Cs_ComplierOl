@@ -38,4 +38,9 @@ public class RecordServiceImpl implements RecordService{
     public int updateScore(int score, String usernum, int labnum){
         return recordRepository.updateScore(score, usernum, labnum);
     }
+
+    @Override
+    public int updateComment(String comments, String commentt, String usernum, int labnum){
+        return recordRepository.updateComment(comments, commentt, usernum, labnum);
+    }
 }

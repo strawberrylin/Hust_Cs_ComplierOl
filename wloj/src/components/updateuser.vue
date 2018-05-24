@@ -71,6 +71,7 @@ export default {
       })
         .then((response) => {
           let data = response
+          alert(data.message)
           if (data.code === 200) {
             rows.splice(index, 1)
           }
@@ -87,6 +88,8 @@ export default {
         }
       })
         .then((response) => {
+          let data = response
+          alert(data.message)
           this.table.password = ''
         })
     },

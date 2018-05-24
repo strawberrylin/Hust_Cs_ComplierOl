@@ -61,6 +61,7 @@ export default {
         .then(response => {
           let data = response
           if (data.code === 200) {
+            alert(data.message)
           }
         })
     },

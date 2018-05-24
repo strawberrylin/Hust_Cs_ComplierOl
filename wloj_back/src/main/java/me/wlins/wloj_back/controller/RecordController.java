@@ -43,10 +43,21 @@ public class RecordController {
 
     @PostMapping("/detail")
     public RestResult getRecordDetail(@NotNull(message = "CodePath is required") String codepath,
-                                      @NotNull(message = "ResultPath is required") String outputpath){
+                                      @NotNull(message = "ResultPath is required") String outputpath,
+                                      @NotNull(message = "UserNum is required") String usernum,
+                                      @NotNull(message = "LabNum is required") int labnum,
+                                      String commentT,
+                                      String commentS,
+                                      @NotNull(message = "UserNum is required") int type
+                                      ){
         ArrayList<String> result = new ArrayList<String>();
+        result.add(usernum);
+        result.add(String.valueOf(labnum));
+        result.add(commentS);
+        result.add(commentT);
         result.add(readFile(codepath));
         result.add(readFile(outputpath));
+        result.add(String.valueOf(type));
         if(result != null){
             return resultGenerator.getSuccessResult(result);
         }
@@ -59,7 +70,7 @@ public class RecordController {
         if(result != null){
             return resultGenerator.getSuccessResult("Lab Records", result);
         }
-        return resultGenerator.getFailResult("Query Failed");
+        return resultGenerator.getFailResult("Query Failed！");
     }
 
     @PostMapping("/update")
@@ -68,9 +79,22 @@ public class RecordController {
                                                     @NotNull(message = "Score is required") int score){
         int x = recordService.updateScore(score, usernum, labnum);
         if(x == 1) {
-            return resultGenerator.getSuccessResult("Update successfully");
+            return resultGenerator.getSuccessResult("Update successfully!");
         }
-        return resultGenerator.getFailResult("Update Failed");
+        return resultGenerator.getFailResult("Update Failed!");
+    }
+
+    @PostMapping("/updatecomment")
+    public RestResult updateComment(@NotNull(message = "UserNum is required")String usernum,
+                                    @NotNull(message = "LabNum is required")int labnum,
+                                    String commentT,
+                                    String commentS){
+        int x = recordService.updateComment(commentS, commentT, usernum, labnum);
+        if(x == 1) {
+            return resultGenerator.getSuccessResult("Update the Comment!");
+        }else {
+            return resultGenerator.getFailResult("Update Failed!");
+        }
     }
 
     public String readFile(String filePath){

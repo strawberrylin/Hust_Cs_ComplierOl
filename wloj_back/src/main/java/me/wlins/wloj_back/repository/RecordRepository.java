@@ -24,4 +24,9 @@ public interface RecordRepository extends JpaRepository<Record, String>{
     @Query(value = "update record r set r.score = ?1, r.state = 1 where r.usernum = ?2 and r.labnum = ?3", nativeQuery = true)
     @Transactional
     int updateScore(int score, String usernum, int labnum);
+
+    @Modifying
+    @Query(value = "update record r set r.comments = ?1, r.commentt = ?2 where r.usernum = ?3 and r.labnum = ?4", nativeQuery = true)
+    @Transactional
+    int updateComment(String comments, String commentt, String usernum, int labnum);
 }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.*;
+import java.sql.Array;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,9 +60,9 @@ public class LabAdminController {
         Lab lab = new Lab(labNum,labName,filePathLab,filePathInput,filePathOutput);
         Lab lo = labService.saveLab(lab);
         if(lo != null){
-            return resultGenerator.getSuccessResult("Add successful", filePathLab);
+            return resultGenerator.getSuccessResult("Add Successfully!", filePathLab);
         }
-        return resultGenerator.getFailResult("Add failed", filePathLab);
+        return resultGenerator.getFailResult("Add Failed!", filePathLab);
     }
 
     @GetMapping("/list")
@@ -78,16 +79,19 @@ public class LabAdminController {
                               String run_param,
                               HttpServletRequest request
                               ){
+        Lab lab = labService.findLabByLabNum(labNum);
         String filePathA = request.getServletContext().getRealPath("/") + usernum + File.separator + labNum + File.separator;
+        String inputPath = lab.getInputPath();
+        String outputPath = lab.getOutputPath();
         String recordPath = saveFile("main.c", filePathA, code);
-        List<String> outputResult = compile(recordPath, compile_param, run_param);
+        List<String> outputResult = compile(recordPath, inputPath, outputPath, compile_param, run_param);
         StringBuffer compileResult = new StringBuffer();
         for(String l: outputResult){
             compileResult.append(l);
+            compileResult.append("<br/>");
         }
         String resultPath = saveFile("result.txt",filePathA,compileResult.toString());
         User user = userService.findByUsernum(usernum);
-        Lab lab = labService.findLabByLabNum(labNum);
         MainKey mainKey = new MainKey(user,lab);
         Record record = new Record(mainKey,recordPath,resultPath,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),0,0);
         Record ro = recordService.saveRecord(record);
@@ -108,7 +112,7 @@ public class LabAdminController {
         result.add(getFile(lab.getLabPath()));
         result.add(getFile(lab.getInputPath()));
         result.add(getFile(lab.getOutputPath()));
-        return resultGenerator.getSuccessResult("quare Sucessfully", result);
+        return resultGenerator.getSuccessResult("Quare Sucessfully!", result);
     }
 
     @PostMapping("/update")
@@ -127,7 +131,7 @@ public class LabAdminController {
         if(x == 1){
             return resultGenerator.getSuccessResult("Update sucessfully!");
         }
-        return resultGenerator.getFailResult("Update failed!");
+        return resultGenerator.getFailResult("Update Failed!");
     }
 
     @PostMapping("/delete")
@@ -135,9 +139,9 @@ public class LabAdminController {
         int x = labService.deleteLabByLabNum(labNum);
         System.out.println(x);
         if(x == 1) {
-            return resultGenerator.getSuccessResult("Delete successfully");
+            return resultGenerator.getSuccessResult("Delete Successfully!");
         }
-        return resultGenerator.getFailResult("Delete failed");
+        return resultGenerator.getFailResult("Delete Failed!");
     }
 
     public static String saveFile(String fileName, String filePathA, String fileContent){
@@ -159,7 +163,6 @@ public class LabAdminController {
 
     public static StringBuffer getFile(String filePath){
         StringBuffer buffer = new StringBuffer();
-        System.out.println(filePath);
         try{
             File fileName = new File(filePath);
             InputStreamReader reader = new InputStreamReader(new FileInputStream(fileName));
@@ -176,7 +179,23 @@ public class LabAdminController {
         return buffer;
     }
 
-    public List<String> compile(String recordPath, String compile_param, String run_param){
+    public ArrayList<String> getData(String filePath){
+        ArrayList<String> result = new ArrayList<String>();
+        try{
+            File fileName = new File(filePath);
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(fileName));
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line = null;
+            while((line = bufferedReader.readLine()) != null){
+                result.add(line);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<String> compile(String recordPath, String inputPath, String outputPath, String compile_param, String run_param){
         File filePath = new File(recordPath);
         List<String> output = new ArrayList<String>();
         if(!filePath.getParentFile().exists()){
@@ -242,39 +261,61 @@ public class LabAdminController {
                 processListXI.add(" RUN OUTPUT :");
                 String[] cmdX = {"./test",run_param};
                 DataOutputStream dos = null;
-                Process processX = Runtime.getRuntime().exec(cmdX,null,filePath.getParentFile());
-                dos = new DataOutputStream(processX.getOutputStream());
-                String s = "1 1";
-                System.out.println(s);
-                dos.write(s.getBytes());
-                dos.writeBytes("\n");
-                dos.writeBytes("exit\n");
-                dos.flush();
-                BufferedReader errorX = new BufferedReader(new InputStreamReader(processX.getErrorStream()));
-                BufferedReader inputX = new BufferedReader(new InputStreamReader(processX.getInputStream()));
-                while ((line = errorX.readLine()) != null) {
-                    processListXE.add(line);
-                }
-                errorX.close();
+                ArrayList<String> inputTest = getData(inputPath);
+                ArrayList<String> outputTest = getData(outputPath);
+                ArrayList<String> runOut = new ArrayList<String>();
+                for(String s : inputTest) {
+                    Process processX = Runtime.getRuntime().exec(cmdX,null,filePath.getParentFile());
+                    dos = new DataOutputStream(processX.getOutputStream());
+                    System.out.println(s);
+                    dos.write(s.getBytes());
+                    dos.writeBytes("\n");
+                    dos.writeBytes("exit\n");
+                    dos.flush();
+                    BufferedReader errorX = new BufferedReader(new InputStreamReader(processX.getErrorStream()));
+                    BufferedReader inputX = new BufferedReader(new InputStreamReader(processX.getInputStream()));
+                    while ((line = errorX.readLine()) != null) {
+                        processListXE.add(line);
+                    }
+                    errorX.close();
 
-                while ((line = inputX.readLine()) != null) {
-                    processListXI.add(line);
-                }
-                inputX.close();
+                    while ((line = inputX.readLine()) != null) {
+                        runOut.add(line);
+                        processListXI.add(line);
+                    }
+                    inputX.close();
 
-                exitValueX = processX.waitFor();
+                    exitValueX = processX.waitFor();
+
+                }
                 StringBuffer s3 = new StringBuffer();
                 for(String l : processListXE){
                     System.out.println(l);
                     s3.append(l);
                 }
                 output.add(s3.toString());
-                StringBuffer s4 = new StringBuffer();
                 for(String l : processListXI){
                     System.out.println(l);
-                    s4.append(l);
+                    output.add(l);
                 }
-                output.add(s4.toString());
+                int count = 0;
+                System.out.println(runOut.size());
+                System.out.println(outputTest.size());
+                for(String s:outputTest) System.out.println(s);
+                for(String s:runOut) System.out.println(s);
+                if(runOut.size() == outputTest.size()){
+                    if(runOut.equals(outputTest)){
+                        count = runOut.size();
+                    }else{
+                        for(int t=0;t<outputTest.size();t++){
+                            if(runOut.get(t).equals(outputTest.get(t))){
+                                count ++;
+                            }
+                        }
+                    }
+                }
+                float rate = (float)count/outputTest.size();
+                output.add("Pass Rate: "+String.valueOf(rate));
             }
         }catch (IOException e){
             e.printStackTrace();

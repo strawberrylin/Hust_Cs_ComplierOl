@@ -46,9 +46,9 @@ public class UserController {
             // store in session
             session.setAttribute("user", user);
 
-            return resultGenerator.getSuccessResult("Login Sucessfully", user);
+            return resultGenerator.getSuccessResult("Login Sucessfully!", user);
         }
-        return resultGenerator.getFailResult("Incorrect username/password");
+        return resultGenerator.getFailResult("Incorrect username/password!");
     }
 
     @PostMapping("/update")
@@ -59,7 +59,7 @@ public class UserController {
         if(x == 1) {
             return resultGenerator.getSuccessResult("Update successfully!");
         }
-        return resultGenerator.getFailResult("Update failed!", x);
+        return resultGenerator.getFailResult("Update Failed!", x);
     }
 
     @PostMapping("/add")
@@ -72,23 +72,23 @@ public class UserController {
         if(ru != null){
             return resultGenerator.getSuccessResult("Add successfully", ru);
         }
-        return resultGenerator.getFailResult("Add failed");
+        return resultGenerator.getFailResult("Add Failed!");
     }
 
     @GetMapping("/list")
     public RestResult getUserList(){
         List<User> userList = userService.findAll();
         if(userList != null){
-            return resultGenerator.getSuccessResult("Query Sucessfully", userList);
+            return resultGenerator.getSuccessResult("Query Sucessfully!", userList);
         }
-        return resultGenerator.getFailResult("Query failed");
+        return resultGenerator.getFailResult("Query Failed!");
     }
 
     @DeleteMapping("/delete")
     public RestResult delete(@NotNull(message = "UserNum is required") String usernum){
         int x = userService.deleteUserByUsernum(usernum);
         if(x == 1){
-            return resultGenerator.getSuccessResult("Delete sucessfully");
+            return resultGenerator.getSuccessResult("Delete Sucessfully!");
         }
         return resultGenerator.getFailResult("Delete Failed");
     }

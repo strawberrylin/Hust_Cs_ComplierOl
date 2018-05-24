@@ -137,7 +137,12 @@ export default {
         url: '/record/detail',
         params: {
           codepath: this.resultData[(this.currentPage - 1) * this.pageSize + index].recordPath,
-          outputpath: this.resultData[(this.currentPage - 1) * this.pageSize + index].resultPath
+          outputpath: this.resultData[(this.currentPage - 1) * this.pageSize + index].resultPath,
+          usernum: this.resultData[(this.currentPage - 1) * this.pageSize + index].mainKey.user.usernum,
+          labnum: this.resultData[(this.currentPage - 1) * this.pageSize + index].mainKey.lab.labNum,
+          commentT: this.resultData[(this.currentPage - 1) * this.pageSize + index].commentT,
+          commentS: this.resultData[(this.currentPage - 1) * this.pageSize + index].commentS,
+          type: this.$store.state.user.type
         }
       })
         .then((response) => {
@@ -181,6 +186,7 @@ export default {
       })
         .then((response) => {
           let data = response
+          alert(data.message)
           if (data.code === 200) {
             this.getLabnumRecord(this.labnum)
           }

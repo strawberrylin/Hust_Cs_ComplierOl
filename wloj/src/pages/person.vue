@@ -74,7 +74,12 @@ export default {
         url: '/record/detail',
         params: {
           codepath: this.data[index].recordPath,
-          outputpath: this.data[index].resultPath
+          outputpath: this.data[index].resultPath,
+          usernum: this.data[index].mainKey.user.usernum,
+          labnum: this.data[index].mainKey.lab.labNum,
+          commentT: this.data[index].commentT,
+          commentS: this.data[index].commentS,
+          type: this.data[index].mainKey.user.type
         }
       })
         .then((response) => {
@@ -102,6 +107,7 @@ export default {
       })
         .then((response) => {
           let data = response
+          alert(data.message)
           if (data.code === 200) {
             this.logOut()
             this.loginFail()
